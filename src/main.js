@@ -5,6 +5,57 @@ const graphTooltip = document.querySelector("#graph-tooltip");
 const packetCounter = document.querySelector("#packet-count");
 const diagnosticButton = document.querySelector("#diagnostic-button");
 
+function setupEntrySequence() {
+  const sequence = document.querySelector("#entry-sequence");
+  const skipButton = document.querySelector("#entry-skip");
+  if (!sequence) return;
+
+  const forcedPreview = new URLSearchParams(window.location.search).get("intro") === "1";
+  let alreadyViewed = false;
+  try {
+    alreadyViewed = window.sessionStorage.getItem("qian-entry-sequence") === "viewed";
+  } catch {
+    alreadyViewed = false;
+  }
+
+  if (prefersReducedMotion || (alreadyViewed && !forcedPreview)) {
+    sequence.remove();
+    return;
+  }
+
+  document.body.classList.add("is-entry-locked");
+  let completed = false;
+  let openingTimer;
+  let completionTimer;
+
+  const completeSequence = () => {
+    if (completed) return;
+    completed = true;
+    window.clearTimeout(openingTimer);
+    window.clearTimeout(completionTimer);
+    sequence.classList.add("is-complete");
+    document.body.classList.remove("is-entry-locked");
+    try {
+      window.sessionStorage.setItem("qian-entry-sequence", "viewed");
+    } catch {
+      // The animation remains functional when storage is unavailable.
+    }
+  };
+
+  const beginOpening = () => {
+    sequence.classList.add("is-opening");
+    completionTimer = window.setTimeout(completeSequence, 1660);
+  };
+
+  openingTimer = window.setTimeout(beginOpening, 560);
+  skipButton?.addEventListener("click", () => {
+    sequence.classList.add("is-opening");
+    window.setTimeout(completeSequence, 180);
+  });
+}
+
+setupEntrySequence();
+
 const researchNodes = [
   {
     id: "embodied",
