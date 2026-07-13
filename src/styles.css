@@ -1048,3 +1048,34 @@ body.is-entry-locked { overflow:hidden }
   .robot-watermark.is-settled { opacity:.018 }
   .entry-manipulator { top:60% }
 }
+
+/* Photoreal robot asset: trace the silhouette, then keep that exact element as the background. */
+.robot-asset { --robot-image:none;position:fixed;left:50%;top:12vh;width:min(28vw,360px);aspect-ratio:2/3;pointer-events:none;transform:translateX(-50%);transform-origin:center center }
+.robot-asset img,.robot-trace,.trace-scan { position:absolute;inset:0;width:100%;height:100%;display:block }
+.robot-asset img { object-fit:contain;filter:grayscale(1) contrast(1.08);opacity:.92;transition:opacity 1.1s ease,filter 1.1s ease }
+.robot-trace { overflow:hidden;clip-path:inset(0 0 100% 0);transition:clip-path 1.15s cubic-bezier(.62,0,.24,1) }
+.robot-trace::before,.robot-trace::after { content:"";position:absolute;inset:0;background:#f5f5f5;-webkit-mask-image:var(--robot-image);mask-image:var(--robot-image);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;transform-origin:center }
+.robot-trace::before { transform:scale(1.014) }
+.robot-trace::after { background:#030303;transform:scale(.989) }
+.trace-scan { top:0;bottom:auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);opacity:0;box-shadow:0 0 12px rgba(255,255,255,.2) }
+.robot-asset.is-traced img { opacity:0;filter:grayscale(1) contrast(1.2) }
+.robot-asset.is-traced .robot-trace { clip-path:inset(0) }
+.robot-asset.is-traced .trace-scan { animation:traceRobotContour 1.15s cubic-bezier(.62,0,.24,1) both }
+
+.entry-robot-imprint { z-index:203;color:#fff;opacity:1;transition:opacity .8s ease }
+.robot-watermark { z-index:2;right:auto;bottom:auto;width:min(28vw,360px);height:auto;color:#fff;opacity:0;mix-blend-mode:normal;transition:opacity .82s ease;transform:translateX(-50%);transform-origin:center center }
+.robot-watermark.is-mapped { opacity:.24 }
+.robot-watermark.is-settled { opacity:.032 }
+.robot-watermark.is-traced img { opacity:0 }
+
+@keyframes traceRobotContour {
+  0% { top:0;opacity:0 }
+  12% { opacity:1 }
+  88% { opacity:1 }
+  100% { top:100%;opacity:0 }
+}
+
+@media (max-width:700px) {
+  .robot-asset,.entry-robot-imprint,.robot-watermark { left:50%;top:16vh;bottom:auto;width:min(66vw,280px);height:auto;transform:translateX(-50%);transform-origin:center center }
+  .robot-watermark.is-settled { opacity:.025 }
+}
