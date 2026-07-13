@@ -6,16 +6,28 @@ const packetCounter = document.querySelector("#packet-count");
 const diagnosticButton = document.querySelector("#diagnostic-button");
 
 async function hydrateRobotAssets() {
-  const response = await fetch("/media/humanoid-robot.webp.b64");
-  if (!response.ok) throw new Error(`Robot asset returned ${response.status}`);
-  const binary = atob((await response.text()).trim());
-  const bytes = new Uint8Array(binary.length);
-  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
-  const robotUrl = URL.createObjectURL(new Blob([bytes], { type: "image/webp" }));
+  const loadRobotPose = async (path) => {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Robot asset returned ${response.status}`);
+    const binary = atob((await response.text()).trim());
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    return URL.createObjectURL(new Blob([bytes], { type: "image/webp" }));
+  };
+
+  const [gripUrl, pullUrl] = await Promise.all([
+    loadRobotPose("/media/humanoid-robot-grip.webp.b64"),
+    loadRobotPose("/media/humanoid-robot-pull.webp.b64"),
+  ]);
+
+  document.querySelectorAll('[data-robot-pose="grip"]').forEach((image) => {
+    image.src = gripUrl;
+  });
+  document.querySelectorAll('[data-robot-pose="pull"]').forEach((image) => {
+    image.src = pullUrl;
+  });
   document.querySelectorAll(".robot-asset").forEach((robot) => {
-    const image = robot.querySelector("img");
-    if (image) image.src = robotUrl;
-    robot.style.setProperty("--robot-image", `url("${robotUrl}")`);
+    robot.style.setProperty("--robot-image", `url("${pullUrl}")`);
   });
 }
 
@@ -87,9 +99,9 @@ async function setupEntrySequence() {
 
   const beginOpening = () => {
     sequence.classList.add("is-opening");
-    tracingTimer = window.setTimeout(traceRobotContour, 1000);
-    mappingTimer = window.setTimeout(mapRobotDirectlyToBackground, 2200);
-    completionTimer = window.setTimeout(completeSequence, 2550);
+    tracingTimer = window.setTimeout(traceRobotContour, 1550);
+    mappingTimer = window.setTimeout(mapRobotDirectlyToBackground, 2850);
+    completionTimer = window.setTimeout(completeSequence, 3260);
   };
 
   openingTimer = window.setTimeout(beginOpening, 560);
