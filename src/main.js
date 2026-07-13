@@ -8,7 +8,11 @@ const diagnosticButton = document.querySelector("#diagnostic-button");
 function setupEntrySequence() {
   const sequence = document.querySelector("#entry-sequence");
   const skipButton = document.querySelector("#entry-skip");
-  if (!sequence) return;
+  const watermark = document.querySelector("#robot-watermark");
+  if (!sequence) {
+    watermark?.classList.add("is-settled");
+    return;
+  }
 
   const forcedPreview = new URLSearchParams(window.location.search).get("intro") === "1";
   let alreadyViewed = false;
@@ -20,20 +24,25 @@ function setupEntrySequence() {
 
   if (prefersReducedMotion || (alreadyViewed && !forcedPreview)) {
     sequence.remove();
+    watermark?.classList.add("is-settled");
     return;
   }
 
   document.body.classList.add("is-entry-locked");
   let completed = false;
   let openingTimer;
+  let settlementTimer;
   let completionTimer;
 
   const completeSequence = () => {
     if (completed) return;
     completed = true;
     window.clearTimeout(openingTimer);
+    window.clearTimeout(settlementTimer);
     window.clearTimeout(completionTimer);
     sequence.classList.add("is-complete");
+    watermark?.classList.remove("is-imprinting");
+    watermark?.classList.add("is-settled");
     document.body.classList.remove("is-entry-locked");
     try {
       window.sessionStorage.setItem("qian-entry-sequence", "viewed");
@@ -42,15 +51,23 @@ function setupEntrySequence() {
     }
   };
 
+  const settleRobotIntoBackground = () => {
+    sequence.classList.add("is-settling");
+    watermark?.classList.remove("is-settled");
+    watermark?.classList.add("is-imprinting");
+  };
+
   const beginOpening = () => {
     sequence.classList.add("is-opening");
-    completionTimer = window.setTimeout(completeSequence, 1660);
+    settlementTimer = window.setTimeout(settleRobotIntoBackground, 820);
+    completionTimer = window.setTimeout(completeSequence, 2050);
   };
 
   openingTimer = window.setTimeout(beginOpening, 560);
   skipButton?.addEventListener("click", () => {
     sequence.classList.add("is-opening");
-    window.setTimeout(completeSequence, 180);
+    settleRobotIntoBackground();
+    window.setTimeout(completeSequence, 320);
   });
 }
 
@@ -614,7 +631,7 @@ function buildRobotArm(canvas) {
   keyLight.shadow.camera.top = 6;
   keyLight.shadow.camera.bottom = -2;
   scene.add(keyLight);
-  const rimLight = new THREE.PointLight(0x2563eb, 11, 12, 2);
+  const rimLight = new THREE.PointLight(0xffffff, 6, 12, 2);
   rimLight.position.set(-3, 3.5, -2.5);
   scene.add(rimLight);
 
@@ -635,11 +652,11 @@ function buildRobotArm(canvas) {
     const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
     scene.add(new THREE.Line(geometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.78 })));
   }
-  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(3.2, 0.012, 0), 0x4f7ff2);
-  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 0.012, 3.2), 0x607080);
-  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 3.2, 0), 0x10b981);
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(3.2, 0.012, 0), 0xf1f3f5);
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 0.012, 3.2), 0x777d85);
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 3.2, 0), 0xc6cbd1);
 
-  function createArmLabel(text, color = "#91a9df") {
+  function createArmLabel(text, color = "#c9cdd2") {
     const labelCanvas = document.createElement("canvas");
     labelCanvas.width = 256;
     labelCanvas.height = 64;
@@ -664,13 +681,13 @@ function buildRobotArm(canvas) {
     return sprite;
   }
 
-  const labelX = createArmLabel("X / FORWARD", "#7fa0ff");
+  const labelX = createArmLabel("X / FORWARD", "#f2f3f5");
   labelX.position.set(3.45, 0.08, 0);
   scene.add(labelX);
-  const labelY = createArmLabel("Y / LATERAL", "#8793a5");
+  const labelY = createArmLabel("Y / LATERAL", "#92979e");
   labelY.position.set(0, 0.08, 3.45);
   scene.add(labelY);
-  const labelZ = createArmLabel("Z / VERTICAL", "#68bd96");
+  const labelZ = createArmLabel("Z / VERTICAL", "#c5c9ce");
   labelZ.position.set(0, 3.45, 0);
   scene.add(labelZ);
 
@@ -678,7 +695,7 @@ function buildRobotArm(canvas) {
   const linkInsetMaterial = new THREE.MeshStandardMaterial({ color: 0x12161c, metalness: 0.66, roughness: 0.25 });
   const jointMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1116, metalness: 0.74, roughness: 0.22 });
   const jointCapMaterial = new THREE.MeshStandardMaterial({ color: 0xe4e7eb, metalness: 0.58, roughness: 0.26 });
-  const jointRingMaterial = new THREE.MeshBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.62 });
+  const jointRingMaterial = new THREE.MeshBasicMaterial({ color: 0xf1f3f5, transparent: true, opacity: 0.54 });
   const robot = new THREE.Group();
   robot.position.set(-0.4, 0, 0);
   robot.scale.setScalar(0.76);
@@ -773,10 +790,10 @@ function buildRobotArm(canvas) {
   joint6.add(tcp);
   const tcpMarker = new THREE.Mesh(
     new THREE.SphereGeometry(0.085, 20, 16),
-    new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x0a8d62, emissiveIntensity: 1.8, roughness: 0.25 }),
+    new THREE.MeshStandardMaterial({ color: 0xf4f5f6, emissive: 0x858a90, emissiveIntensity: 1.15, roughness: 0.25 }),
   );
   tcp.add(tcpMarker);
-  const tcpLabel = createArmLabel("TCP / LIVE", "#67d6a7");
+  const tcpLabel = createArmLabel("TCP / LIVE", "#f1f3f5");
   tcpLabel.position.set(0.62, 0.16, 0);
   tcp.add(tcpLabel);
 
@@ -791,7 +808,7 @@ function buildRobotArm(canvas) {
   trajectoryGeometry.setAttribute("position", new THREE.BufferAttribute(trajectoryPoints, 3));
   const trajectory = new THREE.Line(
     trajectoryGeometry,
-    new THREE.LineBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.65 }),
+    new THREE.LineBasicMaterial({ color: 0xe5e7eb, transparent: true, opacity: 0.52 }),
   );
   scene.add(trajectory);
   const history = Array.from({ length: 90 }, () => new THREE.Vector3());
@@ -806,7 +823,7 @@ function buildRobotArm(canvas) {
   scene.add(target);
   const targetRing = new THREE.Mesh(
     new THREE.TorusGeometry(0.25, 0.012, 8, 64),
-    new THREE.MeshBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.38 }),
+    new THREE.MeshBasicMaterial({ color: 0xf3f4f6, transparent: true, opacity: 0.3 }),
   );
   targetRing.rotation.x = Math.PI / 2;
   target.add(targetRing);
