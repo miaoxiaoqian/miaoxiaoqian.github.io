@@ -580,7 +580,7 @@ diagnosticButton?.addEventListener("click", () => {
   spatialCore?.runDiagnostic();
   window.setTimeout(() => {
     diagnosticButton.classList.remove("is-running");
-    document.querySelector("#research-map")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+    document.querySelector("#about")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, prefersReducedMotion ? 0 : 850);
 });
 
@@ -625,7 +625,7 @@ const sectionObserver = new IntersectionObserver((entries) => {
     });
   });
 }, { rootMargin: "-30% 0px -55%", threshold: 0.01 });
-["research-map", "about", "featured-work", "toolbox", "connect"].forEach((id) => {
+["about", "sim-demos", "knowledge-base", "connect"].forEach((id) => {
   const section = document.getElementById(id);
   if (section) sectionObserver.observe(section);
 });
@@ -652,6 +652,219 @@ contactForm?.addEventListener("submit", (event) => {
 });
 
 document.querySelector("#current-year").textContent = new Date().getFullYear();
+
+document.querySelectorAll(".cv-entry > button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const entry = button.closest(".cv-entry");
+    const content = entry.querySelector(".cv-entry-content");
+    const willOpen = button.getAttribute("aria-expanded") !== "true";
+    button.setAttribute("aria-expanded", String(willOpen));
+    entry.classList.toggle("is-open", willOpen);
+    content.hidden = !willOpen;
+    button.querySelector("i").textContent = willOpen ? "−" : "+";
+  });
+});
+
+document.querySelector("#cv-download")?.addEventListener("click", () => window.print());
+
+const simulations = [
+  {
+    kicker: "ALLBASE / FAILURE ANALYSIS",
+    name: "Policy rollout — failure record",
+    description: "完整保留失败样本，用于分析抓取、轨迹执行与终止状态之间的误差累积。",
+    result: "FAILURE CASE",
+    resultClass: "result-failure",
+    video: "/media/libero-ep009-failure.mp4.b64",
+    poster: "/media/libero-ep009-poster.jpg.b64",
+    duration: "83.2 S",
+  },
+  {
+    kicker: "FINAL_SKILL / SUCCESS RECORD",
+    name: "Policy rollout — successful execution",
+    description: "成功样本展示 Final Skill 策略完成同一 EP009 任务的执行过程，可与失败轨迹直接对照。",
+    result: "SUCCESS CASE",
+    resultClass: "result-success",
+    video: "/media/libero-ep009-success.mp4.b64",
+    poster: "/media/libero-ep009-success-poster.jpg.b64",
+    duration: "67.5 S",
+  },
+];
+
+let activeSimulation = 0;
+let simulationRequest = 0;
+const simulationVideo = document.querySelector("#simulation-video");
+const simulationDots = [...document.querySelectorAll("#simulation-dots button")];
+const mediaAssetCache = new Map();
+
+async function loadEncodedMedia(path, mimeType) {
+  if (mediaAssetCache.has(path)) return mediaAssetCache.get(path);
+  const promise = fetch(path)
+    .then((response) => {
+      if (!response.ok) throw new Error(`Media asset returned ${response.status}`);
+      return response.text();
+    })
+    .then((encoded) => {
+      const binary = atob(encoded.trim());
+      const bytes = new Uint8Array(binary.length);
+      for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+      return URL.createObjectURL(new Blob([bytes], { type: mimeType }));
+    });
+  mediaAssetCache.set(path, promise);
+  return promise;
+}
+
+async function updateSimulation(nextIndex) {
+  if (!simulationVideo) return;
+  const request = ++simulationRequest;
+  activeSimulation = (nextIndex + simulations.length) % simulations.length;
+  const simulation = simulations[activeSimulation];
+  const adjacent = simulations[(activeSimulation + 1) % simulations.length];
+
+  simulationVideo.pause();
+  document.querySelector("#simulation-kicker").textContent = simulation.kicker;
+  document.querySelector("#simulation-name").textContent = simulation.name;
+  document.querySelector("#simulation-description").textContent = simulation.description;
+  document.querySelector("#simulation-counter").textContent = `${String(activeSimulation + 1).padStart(2, "0")} / ${String(simulations.length).padStart(2, "0")}`;
+
+  const result = document.querySelector("#simulation-result");
+  result.className = `simulation-result ${simulation.resultClass}`;
+  result.innerHTML = `<i></i> ${simulation.result}`;
+
+  ["left", "right"].forEach((side) => {
+    const label = document.querySelector(`#preview-${side}-label`);
+    label.textContent = adjacent.kicker.replace(" ANALYSIS", "").replace(" RECORD", "");
+  });
+
+  simulationDots.forEach((dot, index) => {
+    dot.classList.toggle("is-active", index === activeSimulation);
+    if (index === activeSimulation) dot.setAttribute("aria-current", "true");
+    else dot.removeAttribute("aria-current");
+  });
+
+  try {
+    const [videoUrl, posterUrl, adjacentPosterUrl] = await Promise.all([
+      loadEncodedMedia(simulation.video, "video/mp4"),
+      loadEncodedMedia(simulation.poster, "image/jpeg"),
+      loadEncodedMedia(adjacent.poster, "image/jpeg"),
+    ]);
+    if (request !== simulationRequest) return;
+    simulationVideo.src = videoUrl;
+    simulationVideo.poster = posterUrl;
+    simulationVideo.load();
+    ["left", "right"].forEach((side) => {
+      document.querySelector(`#preview-${side}-image`).src = adjacentPosterUrl;
+    });
+    if (!prefersReducedMotion) simulationVideo.play().catch(() => {});
+  } catch (error) {
+    document.querySelector("#simulation-description").textContent = "视频资产暂时无法载入，请刷新页面后重试。";
+    console.warn("Simulation media unavailable.", error);
+  }
+}
+
+document.querySelectorAll("#simulation-prev, #simulation-arrow-prev").forEach((button) => {
+  button.addEventListener("click", () => updateSimulation(activeSimulation - 1));
+});
+document.querySelectorAll("#simulation-next, #simulation-arrow-next").forEach((button) => {
+  button.addEventListener("click", () => updateSimulation(activeSimulation + 1));
+});
+simulationDots.forEach((dot, index) => dot.addEventListener("click", () => updateSimulation(index)));
+updateSimulation(0);
+
+let simulationTouchStart = 0;
+document.querySelector("#simulation-carousel")?.addEventListener("touchstart", (event) => {
+  simulationTouchStart = event.changedTouches[0].clientX;
+}, { passive: true });
+document.querySelector("#simulation-carousel")?.addEventListener("touchend", (event) => {
+  const distance = event.changedTouches[0].clientX - simulationTouchStart;
+  if (Math.abs(distance) > 48) updateSimulation(activeSimulation + (distance < 0 ? 1 : -1));
+}, { passive: true });
+
+const intelDocs = {
+  vla: {
+    filename: "vla_core_papers.md",
+    path: "literature_radar / VISION_LANGUAGE_ACTION",
+    title: "Vision–Language–Action: core reading set",
+    intro: "围绕语义先验、跨本体策略与可复现开源模型建立阅读坐标，持续记录可验证的论文链接与个人判断。",
+    body: `<div class="paper-cards">
+      <a href="https://arxiv.org/abs/2307.15818" target="_blank" rel="noreferrer"><span>FOUNDATION / VLA</span><strong>RT-2</strong><small>Vision-Language-Action Models Transfer Web Knowledge to Robotic Control ↗</small></a>
+      <a href="https://arxiv.org/abs/2406.09246" target="_blank" rel="noreferrer"><span>OPEN SOURCE / VLA</span><strong>OpenVLA</strong><small>An Open-Source Vision-Language-Action Model ↗</small></a>
+      <a href="https://arxiv.org/abs/2405.12213" target="_blank" rel="noreferrer"><span>GENERALIST POLICY</span><strong>Octo</strong><small>An Open-Source Generalist Robot Policy ↗</small></a>
+    </div><div class="takeaway-block"><span>STANDARD TAKEAWAY</span><p>把大规模视觉语言表征转化为动作并不是终点；真正值得持续验证的是跨任务泛化、闭环可靠性与对物理约束的理解。</p></div>`,
+  },
+  spatial: {
+    filename: "spatial_reasoning.md",
+    path: "literature_radar / SPATIAL_INTELLIGENCE",
+    title: "Spatial reasoning as an action prior",
+    intro: "把坐标、拓扑关系、可供性和物理约束组织成面向行动的内部表征。",
+    body: `<div class="log-grid"><div><span>QUESTION_01</span><strong>如何从视觉观测中保持稳定对象关系？</strong></div><div><span>QUESTION_02</span><strong>语言常识如何约束可执行动作？</strong></div><div><span>QUESTION_03</span><strong>长时序策略如何维护空间记忆？</strong></div></div><div class="takeaway-block"><span>WORKING HYPOTHESIS</span><p>空间表征应直接服务于决策与控制，并通过执行反馈持续校正，而不是停留在静态场景描述。</p></div>`,
+  },
+  alignment: {
+    filename: "coordinate_alignment.md",
+    path: "research_logs / MULTIMODAL_FUSION",
+    title: "Fixing coordinate alignment in multimodal fusion",
+    intro: "研究日志模板：记录相机坐标、世界坐标、动作空间之间的转换假设与可复现实验。",
+    body: `<div class="code-note"><span>01</span><code>observation → camera_frame → world_frame</code><span>02</span><code>world_state → policy_tokens → action_space</code><span>03</span><code>execution_feedback → alignment_update</code></div><div class="takeaway-block"><span>DEBUG PRINCIPLE</span><p>先验证坐标系、时间同步和单位，再讨论模型是否真正理解了空间关系。</p></div>`,
+  },
+  knowledge: {
+    filename: "knowledge_graph.md",
+    path: "research_logs / KNOWLEDGE_SYSTEM",
+    title: "Managing an embodied AI knowledge graph",
+    intro: "将论文、概念、实验、失败记录与代码入口连接起来，构建可追踪的研究记忆。",
+    body: `<div class="log-grid"><div><span>NODE TYPE</span><strong>PAPER / CONCEPT / EXPERIMENT</strong></div><div><span>EDGE TYPE</span><strong>SUPPORTS / CONTRADICTS / EXTENDS</strong></div><div><span>OUTPUT</span><strong>QUESTION → TEST → EVIDENCE</strong></div></div><div class="takeaway-block"><span>STANDARD TAKEAWAY</span><p>知识库的价值不是收藏数量，而是能否把一个研究判断追溯到来源、实验与后续问题。</p></div>`,
+  },
+  projects: {
+    filename: "featured_projects.json",
+    path: "project_index / GITHUB_PUBLIC_REPOS",
+    title: "Public project interface",
+    intro: "从 GitHub 公开接口读取最近更新的项目。以后新仓库公开后，这里会自动形成可访问的项目入口。",
+    body: `<div id="project-feed" class="project-feed"><p>SYNCING PUBLIC REPOSITORIES…</p></div>`,
+  },
+};
+
+async function loadProjectFeed() {
+  const feed = document.querySelector("#project-feed");
+  if (!feed) return;
+  try {
+    const response = await fetch("https://api.github.com/users/miaoxiaoqian/repos?sort=updated&per_page=6&type=owner", {
+      headers: { accept: "application/vnd.github+json" },
+    });
+    if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+    const repositories = (await response.json()).filter((repository) => repository.name !== "miaoxiaoqian.github.io");
+    feed.replaceChildren();
+    if (!repositories.length) {
+      feed.innerHTML = `<p>NO PUBLIC PROJECTS INDEXED YET · <a href="https://github.com/miaoxiaoqian" target="_blank" rel="noreferrer">OPEN GITHUB ↗</a></p>`;
+      return;
+    }
+    repositories.slice(0, 6).forEach((repository) => {
+      const anchor = document.createElement("a");
+      anchor.href = repository.html_url;
+      anchor.target = "_blank";
+      anchor.rel = "noreferrer";
+      const title = document.createElement("strong");
+      title.textContent = repository.name;
+      const description = document.createElement("span");
+      description.textContent = repository.description || "Public research or engineering repository";
+      const meta = document.createElement("small");
+      meta.textContent = `${repository.language || "MULTI"} · UPDATED ${String(repository.updated_at).slice(0, 10)} ↗`;
+      anchor.append(title, description, meta);
+      feed.append(anchor);
+    });
+  } catch (error) {
+    feed.innerHTML = `<p>PROJECT FEED UNAVAILABLE · <a href="https://github.com/miaoxiaoqian" target="_blank" rel="noreferrer">OPEN GITHUB ↗</a></p>`;
+    console.warn("GitHub project feed unavailable.", error);
+  }
+}
+
+document.querySelectorAll("[data-intel-doc]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const doc = intelDocs[button.dataset.intelDoc];
+    if (!doc) return;
+    document.querySelectorAll("[data-intel-doc]").forEach((item) => item.classList.toggle("is-active", item === button));
+    document.querySelector("#intel-filename").textContent = doc.filename;
+    document.querySelector("#intel-document-content").innerHTML = `<p class="document-path">${doc.path}</p><h3>${doc.title}</h3><p class="document-intro">${doc.intro}</p>${doc.body}`;
+    if (button.dataset.intelDoc === "projects") loadProjectFeed();
+  });
+});
 
 async function loadGithubContributions() {
   const heatmap = document.querySelector("#contribution-heatmap");
