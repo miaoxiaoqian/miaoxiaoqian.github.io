@@ -58,6 +58,7 @@ async function setupEntrySequence() {
 
   document.body.classList.add("is-entry-locked");
   let completed = false;
+  let gripTimer;
   let openingTimer;
   let tracingTimer;
   let mappingTimer;
@@ -66,6 +67,7 @@ async function setupEntrySequence() {
   const completeSequence = () => {
     if (completed) return;
     completed = true;
+    window.clearTimeout(gripTimer);
     window.clearTimeout(openingTimer);
     window.clearTimeout(tracingTimer);
     window.clearTimeout(mappingTimer);
@@ -99,12 +101,13 @@ async function setupEntrySequence() {
 
   const beginOpening = () => {
     sequence.classList.add("is-opening");
-    tracingTimer = window.setTimeout(traceRobotContour, 1550);
-    mappingTimer = window.setTimeout(mapRobotDirectlyToBackground, 2850);
-    completionTimer = window.setTimeout(completeSequence, 3260);
+    tracingTimer = window.setTimeout(traceRobotContour, 2180);
+    mappingTimer = window.setTimeout(mapRobotDirectlyToBackground, 3540);
+    completionTimer = window.setTimeout(completeSequence, 3980);
   };
 
-  openingTimer = window.setTimeout(beginOpening, 560);
+  gripTimer = window.setTimeout(() => sequence.classList.add("is-gripping"), 320);
+  openingTimer = window.setTimeout(beginOpening, 760);
   skipButton?.addEventListener("click", () => {
     sequence.classList.add("is-opening");
     traceRobotContour();
