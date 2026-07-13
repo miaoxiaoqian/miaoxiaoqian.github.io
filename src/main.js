@@ -542,6 +542,292 @@ function updateResearchDrawer(nodeId) {
   });
 }
 
+function buildRobotArm(canvas) {
+  if (!canvas) return null;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40);
+  camera.position.set(7.1, 4.8, 8.2);
+  camera.lookAt(0, 1.72, 0);
+  const renderer = createRenderer(canvas);
+  renderer.toneMappingExposure = 1.06;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  scene.add(new THREE.HemisphereLight(0xdce7ff, 0x030405, 1.55));
+  const keyLight = new THREE.DirectionalLight(0xffffff, 3.6);
+  keyLight.position.set(4.5, 7, 5);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(768, 768);
+  keyLight.shadow.camera.left = -5;
+  keyLight.shadow.camera.right = 5;
+  keyLight.shadow.camera.top = 6;
+  keyLight.shadow.camera.bottom = -2;
+  scene.add(keyLight);
+  const rimLight = new THREE.PointLight(0x2563eb, 11, 12, 2);
+  rimLight.position.set(-3, 3.5, -2.5);
+  scene.add(rimLight);
+
+  const grid = new THREE.GridHelper(8, 20, 0x294f9e, 0x14213c);
+  grid.material.transparent = true;
+  grid.material.opacity = 0.42;
+  scene.add(grid);
+  const shadowFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(8, 8),
+    new THREE.ShadowMaterial({ color: 0x000000, opacity: 0.34 }),
+  );
+  shadowFloor.rotation.x = -Math.PI / 2;
+  shadowFloor.position.y = -0.012;
+  shadowFloor.receiveShadow = true;
+  scene.add(shadowFloor);
+
+  function addAxis(start, end, color) {
+    const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+    scene.add(new THREE.Line(geometry, new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.78 })));
+  }
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(3.2, 0.012, 0), 0x4f7ff2);
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 0.012, 3.2), 0x607080);
+  addAxis(new THREE.Vector3(0, 0.012, 0), new THREE.Vector3(0, 3.2, 0), 0x10b981);
+
+  function createArmLabel(text, color = "#91a9df") {
+    const labelCanvas = document.createElement("canvas");
+    labelCanvas.width = 256;
+    labelCanvas.height = 64;
+    const context = labelCanvas.getContext("2d");
+    context.clearRect(0, 0, 256, 64);
+    context.fillStyle = "rgba(5, 7, 10, 0.84)";
+    context.strokeStyle = "rgba(255, 255, 255, 0.08)";
+    context.lineWidth = 2;
+    context.beginPath();
+    context.roundRect(3, 3, 250, 58, 9);
+    context.fill();
+    context.stroke();
+    context.fillStyle = color;
+    context.font = "500 22px monospace";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillText(text, 128, 33);
+    const texture = new THREE.CanvasTexture(labelCanvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false }));
+    sprite.scale.set(1.15, 0.29, 1);
+    return sprite;
+  }
+
+  const labelX = createArmLabel("X / FORWARD", "#7fa0ff");
+  labelX.position.set(3.45, 0.08, 0);
+  scene.add(labelX);
+  const labelY = createArmLabel("Y / LATERAL", "#8793a5");
+  labelY.position.set(0, 0.08, 3.45);
+  scene.add(labelY);
+  const labelZ = createArmLabel("Z / VERTICAL", "#68bd96");
+  labelZ.position.set(0, 3.45, 0);
+  scene.add(labelZ);
+
+  const linkMaterial = new THREE.MeshStandardMaterial({ color: 0xc8cdd3, metalness: 0.52, roughness: 0.3 });
+  const linkInsetMaterial = new THREE.MeshStandardMaterial({ color: 0x12161c, metalness: 0.66, roughness: 0.25 });
+  const jointMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1116, metalness: 0.74, roughness: 0.22 });
+  const jointCapMaterial = new THREE.MeshStandardMaterial({ color: 0xe4e7eb, metalness: 0.58, roughness: 0.26 });
+  const jointRingMaterial = new THREE.MeshBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.62 });
+  const robot = new THREE.Group();
+  robot.position.set(-0.4, 0, 0);
+  robot.scale.setScalar(0.76);
+  scene.add(robot);
+
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.82, 0.28, 40), linkMaterial);
+  base.position.y = 0.14;
+  robot.add(base);
+  const baseInset = new THREE.Mesh(new THREE.CylinderGeometry(0.46, 0.56, 0.4, 36), linkInsetMaterial);
+  baseInset.position.y = 0.44;
+  robot.add(baseInset);
+
+  function addJoint(parent, radius = 0.28) {
+    const joint = new THREE.Mesh(new THREE.SphereGeometry(radius, 24, 18), jointMaterial);
+    parent.add(joint);
+    const axisCap = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.72, radius * 0.72, 0.075, 24), jointCapMaterial);
+    axisCap.rotation.x = Math.PI / 2;
+    axisCap.position.z = radius * 0.86;
+    parent.add(axisCap);
+    const rearCap = axisCap.clone();
+    rearCap.position.z *= -1;
+    parent.add(rearCap);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(radius * 1.08, 0.018, 8, 42), jointRingMaterial);
+    ring.rotation.x = Math.PI / 2;
+    parent.add(ring);
+    return joint;
+  }
+
+  function addLink(parent, length, radius, offset = length / 2) {
+    const shell = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.82, radius, length, 24), linkMaterial);
+    shell.position.y = offset;
+    parent.add(shell);
+    const inset = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.26, radius * 0.3, length * 0.72, 18), linkInsetMaterial);
+    inset.position.y = offset;
+    parent.add(inset);
+    return shell;
+  }
+
+  const joint1 = new THREE.Group();
+  joint1.position.y = 0.7;
+  robot.add(joint1);
+  addJoint(joint1, 0.34);
+
+  const shoulderColumn = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.34, 0.72, 24), linkMaterial);
+  shoulderColumn.position.y = 0.38;
+  joint1.add(shoulderColumn);
+
+  const joint2 = new THREE.Group();
+  joint2.position.y = 0.78;
+  joint1.add(joint2);
+  addJoint(joint2, 0.31);
+  addLink(joint2, 1.5, 0.24);
+
+  const joint3 = new THREE.Group();
+  joint3.position.y = 1.5;
+  joint2.add(joint3);
+  addJoint(joint3, 0.28);
+  addLink(joint3, 1.22, 0.2);
+
+  const joint4 = new THREE.Group();
+  joint4.position.y = 1.22;
+  joint3.add(joint4);
+  addJoint(joint4, 0.23);
+  addLink(joint4, 0.54, 0.15);
+
+  const joint5 = new THREE.Group();
+  joint5.position.y = 0.54;
+  joint4.add(joint5);
+  addJoint(joint5, 0.18);
+  addLink(joint5, 0.34, 0.12);
+
+  const joint6 = new THREE.Group();
+  joint6.position.y = 0.34;
+  joint5.add(joint6);
+  addJoint(joint6, 0.14);
+
+  const wrist = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.14, 0.26, 18), linkMaterial);
+  wrist.position.y = 0.13;
+  joint6.add(wrist);
+  const palm = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.16, 0.3), linkInsetMaterial);
+  palm.position.y = 0.34;
+  joint6.add(palm);
+  const fingerLeft = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.38, 0.11), linkMaterial);
+  fingerLeft.position.set(-0.15, 0.58, 0);
+  joint6.add(fingerLeft);
+  const fingerRight = fingerLeft.clone();
+  fingerRight.position.x = 0.15;
+  joint6.add(fingerRight);
+
+  const tcp = new THREE.Object3D();
+  tcp.position.y = 0.82;
+  joint6.add(tcp);
+  const tcpMarker = new THREE.Mesh(
+    new THREE.SphereGeometry(0.085, 20, 16),
+    new THREE.MeshStandardMaterial({ color: 0x10b981, emissive: 0x0a8d62, emissiveIntensity: 1.8, roughness: 0.25 }),
+  );
+  tcp.add(tcpMarker);
+  const tcpLabel = createArmLabel("TCP / LIVE", "#67d6a7");
+  tcpLabel.position.set(0.62, 0.16, 0);
+  tcp.add(tcpLabel);
+
+  robot.traverse((object) => {
+    if (!object.isMesh) return;
+    object.castShadow = true;
+    object.receiveShadow = true;
+  });
+
+  const trajectoryGeometry = new THREE.BufferGeometry();
+  const trajectoryPoints = new Float32Array(90 * 3);
+  trajectoryGeometry.setAttribute("position", new THREE.BufferAttribute(trajectoryPoints, 3));
+  const trajectory = new THREE.Line(
+    trajectoryGeometry,
+    new THREE.LineBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.65 }),
+  );
+  scene.add(trajectory);
+  const history = Array.from({ length: 90 }, () => new THREE.Vector3());
+  const tcpPosition = new THREE.Vector3();
+  const previousTcp = new THREE.Vector3();
+  let sampleFrame = 0;
+
+  const target = new THREE.Mesh(
+    new THREE.SphereGeometry(0.12, 20, 16),
+    new THREE.MeshStandardMaterial({ color: 0x7898ea, emissive: 0x1d4fb8, emissiveIntensity: 1.2, roughness: 0.25 }),
+  );
+  scene.add(target);
+  const targetRing = new THREE.Mesh(
+    new THREE.TorusGeometry(0.25, 0.012, 8, 64),
+    new THREE.MeshBasicMaterial({ color: 0x4f7ff2, transparent: true, opacity: 0.38 }),
+  );
+  targetRing.rotation.x = Math.PI / 2;
+  target.add(targetRing);
+
+  const pointer = new THREE.Vector2();
+  const cameraTarget = new THREE.Vector2();
+  canvas.addEventListener("pointermove", (event) => {
+    const bounds = canvas.getBoundingClientRect();
+    pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+    pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+    cameraTarget.copy(pointer);
+  }, { passive: true });
+  canvas.addEventListener("pointerleave", () => cameraTarget.set(0, 0));
+
+  let visible = false;
+  const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0.04 });
+  observer.observe(canvas);
+
+  const jointReadouts = [1, 2, 3, 4, 5, 6].map((index) => document.querySelector(`#joint-${index}`));
+  const coordX = document.querySelector("#coord-x");
+  const coordY = document.querySelector("#coord-y");
+  const coordZ = document.querySelector("#coord-z");
+  function degrees(value) {
+    const numeric = THREE.MathUtils.radToDeg(value);
+    return `${numeric >= 0 ? "+" : "−"}${Math.abs(numeric).toFixed(1)}°`;
+  }
+
+  function update(time, delta) {
+    if (!visible || window.innerWidth <= 540) return;
+    resizeRenderer(renderer, camera, canvas);
+    const seconds = time * 0.001;
+    const q = [
+      Math.sin(seconds * 0.28) * 0.56,
+      -0.54 + Math.sin(seconds * 0.36) * 0.16,
+      1.04 + Math.cos(seconds * 0.31) * 0.22,
+      Math.sin(seconds * 0.62) * 0.42,
+      0.38 + Math.sin(seconds * 0.48) * 0.24,
+      Math.cos(seconds * 0.7) * 0.58,
+    ];
+    joint1.rotation.y = q[0];
+    joint2.rotation.z = q[1];
+    joint3.rotation.z = q[2];
+    joint4.rotation.y = q[3];
+    joint5.rotation.z = q[4];
+    joint6.rotation.y = q[5];
+
+    target.position.set(1.8 + Math.sin(seconds * 0.37) * 0.3, 1.75 + Math.cos(seconds * 0.31) * 0.22, 0.5 + Math.sin(seconds * 0.23) * 0.5);
+    targetRing.rotation.z = seconds * 0.35;
+    tcp.getWorldPosition(tcpPosition);
+
+    if ((sampleFrame += 1) % 3 === 0) {
+      history.shift();
+      history.push(tcpPosition.clone());
+      history.forEach((point, index) => point.toArray(trajectoryPoints, index * 3));
+      trajectoryGeometry.attributes.position.needsUpdate = true;
+    }
+
+    jointReadouts.forEach((element, index) => { if (element) element.textContent = degrees(q[index]); });
+    if (coordX) coordX.textContent = `${tcpPosition.x >= 0 ? "+" : "−"}${Math.abs(tcpPosition.x * 0.42).toFixed(3)} M`;
+    if (coordY) coordY.textContent = `${tcpPosition.z >= 0 ? "+" : "−"}${Math.abs(tcpPosition.z * 0.42).toFixed(3)} M`;
+    if (coordZ) coordZ.textContent = `${tcpPosition.y >= 0 ? "+" : "−"}${Math.abs(tcpPosition.y * 0.42).toFixed(3)} M`;
+    previousTcp.copy(tcpPosition);
+
+    camera.position.x += (7.1 + cameraTarget.x * 0.65 - camera.position.x) * 0.035;
+    camera.position.y += (4.8 + cameraTarget.y * 0.32 - camera.position.y) * 0.035;
+    camera.lookAt(0, 1.72, 0);
+    renderer.render(scene, camera);
+  }
+
+  return { update };
+}
+
 let spatialCore = null;
 let knowledgeMap = null;
 try {
@@ -555,6 +841,16 @@ try {
   document.querySelector(".mobile-knowledge-list").style.display = "grid";
 }
 
+let robotArm = null;
+try {
+  if (window.innerWidth > 540) robotArm = buildRobotArm(document.querySelector("#robot-arm-canvas"));
+} catch (error) {
+  console.warn("Robot arm visualization unavailable; using responsive fallback.", error);
+  const robotCanvas = document.querySelector("#robot-arm-canvas");
+  if (robotCanvas) robotCanvas.style.display = "none";
+  document.querySelector(".robot-arm-fallback")?.classList.add("is-visible");
+}
+
 let previousFrame = performance.now();
 let packetValue = 0x04f2;
 function animate(time) {
@@ -563,9 +859,11 @@ function animate(time) {
   if (!prefersReducedMotion && !document.hidden) {
     spatialCore?.update(time, delta);
     knowledgeMap?.update(time, delta);
+    robotArm?.update(time, delta);
   } else {
     spatialCore?.update(0, 0);
     knowledgeMap?.update(0, 0);
+    robotArm?.update(0, 0);
   }
   if (packetCounter && Math.floor(time / 850) !== Math.floor((time - 16) / 850)) {
     packetValue = (packetValue + 0x11) % 0xffff;
@@ -591,13 +889,14 @@ updateResearchDrawer("embodied");
 
 const coordinateStart = performance.now();
 function updateCoordinates(time) {
+  if (robotArm) return;
   const seconds = (time - coordinateStart) * 0.001;
   const x = 0.842 + Math.sin(seconds * 0.7) * 0.018;
   const y = -0.114 + Math.cos(seconds * 0.56) * 0.012;
   const z = 1.208 + Math.sin(seconds * 0.42) * 0.024;
-  document.querySelector("#coord-x").textContent = `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(3)}`;
-  document.querySelector("#coord-y").textContent = `${y >= 0 ? "+" : "−"}${Math.abs(y).toFixed(3)}`;
-  document.querySelector("#coord-z").textContent = `${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(3)}`;
+  document.querySelector("#coord-x").textContent = `${x >= 0 ? "+" : "−"}${Math.abs(x).toFixed(3)} M`;
+  document.querySelector("#coord-y").textContent = `${y >= 0 ? "+" : "−"}${Math.abs(y).toFixed(3)} M`;
+  document.querySelector("#coord-z").textContent = `${z >= 0 ? "+" : "−"}${Math.abs(z).toFixed(3)} M`;
   if (!prefersReducedMotion) requestAnimationFrame(updateCoordinates);
 }
 requestAnimationFrame(updateCoordinates);
