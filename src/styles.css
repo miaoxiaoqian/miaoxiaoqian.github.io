@@ -617,3 +617,178 @@ a { color: inherit; }
   .cv-entry-content[hidden] { display: block; }
   .cv-topline button { display: none; }
 }
+
+/* Compact contribution signal inside the academic CV column */
+.cv-dashboard { display: flex; flex-direction: column; }
+.cv-activity { margin-top: 2.2rem; padding-top: 1.6rem; border-top: 1px solid var(--border); }
+.cv-activity-topline { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.cv-activity-topline > div { display: grid; gap: .4rem; }
+.cv-activity-topline > div > span { color: #6076a9; font: .43rem var(--mono); letter-spacing: .07em; }
+.cv-activity-topline h3 { margin: 0; color: #c7ced8; font-size: 1rem; font-weight: 520; letter-spacing: -.015em; }
+.cv-activity-metrics { margin-top: 1.25rem; }
+.cv-activity-metrics > div { padding: .85rem; }
+.cv-activity-metrics span { font-size: .4rem; }
+.cv-activity-metrics strong { font-size: .58rem; }
+.cv-heatmap-shell { margin-top: 1.25rem; padding: 1rem; }
+.cv-heatmap-shell .heatmap-days { width: 24px; padding-top: 24px; font-size: .37rem; }
+.cv-heatmap-shell .heatmap-months { height: 20px; grid-template-columns: repeat(53,8px); gap: 2px; font-size: .37rem; }
+.cv-heatmap-shell .contribution-heatmap { grid-template-rows: repeat(7,8px); grid-auto-columns: 8px; gap: 2px; }
+.cv-heatmap-shell .contribution-cell { width: 8px; height: 8px; }
+.cv-activity-footer { margin-top: .8rem; }
+.cv-activity-footer a { font-size: .43rem; }
+
+/* Personal layer — basketball and Mamba mentality */
+.basketball-section { --court-gold:#aa8952; overflow: hidden; background: linear-gradient(180deg,#0d0f12,#0f1115); }
+.basketball-heading { grid-template-columns: minmax(180px,.42fr) 1.2fr .65fr; }
+.basketball-grid { margin-top: 5rem; display: grid; grid-template-columns: minmax(380px,.78fr) minmax(0,1.22fr); gap: 1rem; }
+.mamba-card,.court-card { min-height: 610px; overflow: hidden; border-radius: .75rem; }
+.mamba-card { position: relative; padding: clamp(1.4rem,3vw,3rem); display: flex; flex-direction: column; background: radial-gradient(circle at 88% 18%,rgba(170,137,82,.08),transparent 28%),var(--panel); }
+.mamba-card::after { content:"24"; position:absolute; right:-.03em; bottom:-.23em; color:rgba(170,137,82,.035); font:700 clamp(12rem,23vw,28rem)/1 var(--sans); letter-spacing:-.11em; pointer-events:none; }
+.mamba-topline { position:relative; z-index:1; display:flex;align-items:center;justify-content:space-between;gap:1rem;color:#697381;font:.45rem var(--mono);letter-spacing:.06em }
+.mamba-topline span:last-child { color:#9a8157; }
+.mamba-identity { position:relative;z-index:1;margin-top:clamp(3rem,6vw,5.5rem);display:grid;grid-template-columns:150px 1fr;gap:1.8rem;align-items:center }
+.mamba-emblem { position:relative;width:142px;height:142px;display:grid;place-items:center;border:1px solid rgba(170,137,82,.32);border-radius:50%;background:radial-gradient(circle,rgba(170,137,82,.07),rgba(170,137,82,.015));box-shadow:inset 0 0 0 10px rgba(255,255,255,.012) }
+.mamba-emblem img { width:105px;height:72px;object-fit:contain;filter:saturate(.72) brightness(.94);transform:translateY(-4px) }
+.mamba-emblem span { position:absolute;right:10px;bottom:10px;width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(170,137,82,.35);border-radius:50%;color:#d0b175;background:#111319;font:620 .62rem var(--mono) }
+.mamba-identity p { margin:0 0 .6rem;color:#806f54;font:.45rem var(--mono);letter-spacing:.08em }
+.mamba-identity h3 { margin:0;max-width:520px;font-size:clamp(2rem,3.4vw,4rem);font-weight:520;line-height:1.03;letter-spacing:-.045em }
+.mamba-copy { position:relative;z-index:1;max-width:720px;margin:2.4rem 0 0;color:#8d96a3;font-size:.8rem;line-height:1.9 }
+.mamba-principles { position:relative;z-index:1;margin-top:auto;padding-top:2rem;display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;border-top:1px solid var(--border) }
+.mamba-principles span { padding:.8rem .5rem;border:1px solid var(--border);color:#8c95a2;background:rgba(255,255,255,.012);font:.44rem var(--mono);text-align:center }
+.mamba-principles i { margin-right:.35rem;color:#8c744d;font-style:normal }
+.mamba-credit { position:relative;z-index:1;margin:1rem 0 0;color:#4f5864;font:.36rem/1.6 var(--mono);letter-spacing:.03em }
+.mamba-credit a { color:#716446;text-decoration:none }
+.court-card { padding:clamp(1.2rem,2.5vw,2rem);display:flex;flex-direction:column;background:rgba(16,19,26,.72) }
+.basketball-court { position:relative;flex:1;min-height:420px;margin:1.8rem 0;overflow:hidden;border:1px solid rgba(170,137,82,.24);border-radius:.35rem;background:linear-gradient(90deg,rgba(170,137,82,.025) 1px,transparent 1px),linear-gradient(rgba(170,137,82,.025) 1px,transparent 1px),#0c0f14;background-size:44px 44px }
+.basketball-court > span { position:absolute;display:block;border-color:rgba(170,137,82,.34) }
+.court-half-line { left:0;right:0;top:13%;height:1px;background:rgba(170,137,82,.3) }
+.court-center-circle { left:50%;top:13%;width:110px;height:110px;border:1px solid rgba(170,137,82,.34);border-radius:50%;transform:translate(-50%,-50%) }
+.court-key { left:50%;bottom:-1px;width:31%;height:43%;border:1px solid rgba(170,137,82,.36);transform:translateX(-50%) }
+.court-free-circle { left:50%;bottom:43%;width:105px;height:105px;border:1px solid rgba(170,137,82,.34);border-radius:50%;transform:translate(-50%,50%) }
+.court-arc { left:50%;bottom:-34%;width:76%;height:94%;border:1px solid rgba(170,137,82,.32);border-radius:50% 50% 0 0;transform:translateX(-50%) }
+.court-board { left:50%;bottom:8%;width:82px;height:1px;background:rgba(225,218,206,.58);transform:translateX(-50%) }
+.court-hoop { left:50%;bottom:10.5%;width:22px;height:22px;border:2px solid rgba(170,137,82,.8)!important;border-radius:50%;transform:translate(-50%,50%) }
+.court-watermark { position:absolute;left:50%;top:53%;color:rgba(170,137,82,.075);font:650 clamp(6rem,11vw,12rem)/1 var(--sans);letter-spacing:-.1em;transform:translate(-50%,-50%) }
+.shot-point { position:absolute;width:8px;height:8px;border-radius:50%;background:#c5a364;box-shadow:0 0 0 5px rgba(170,137,82,.07),0 0 14px rgba(170,137,82,.28);animation:shotPoint 3.6s ease-in-out infinite }
+.shot-one { left:18%;bottom:22% }.shot-two{left:36%;bottom:48%;animation-delay:-.8s}.shot-three{left:50%;top:25%;animation-delay:-1.6s}.shot-four{right:21%;bottom:35%;animation-delay:-2.4s}
+.court-metrics { display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border) }
+.court-metrics div { padding:.9rem;display:grid;gap:.45rem;border-right:1px solid var(--border) }.court-metrics div:last-child{border-right:0}
+.court-metrics span { color:#5f6978;font:.4rem var(--mono) }.court-metrics strong{color:#a79b87;font:500 .48rem var(--mono)}
+@keyframes shotPoint { 0%,100%{transform:scale(.75);opacity:.55}50%{transform:scale(1);opacity:1} }
+
+@media (max-width: 1120px) {
+  .basketball-heading { grid-template-columns:1fr; }
+  .basketball-grid { grid-template-columns:1fr; }
+}
+
+@media (max-width: 900px) {
+  .cv-activity { margin-top:2rem; }
+  .cv-heatmap-shell { overflow:hidden; }
+}
+
+@media (max-width: 640px) {
+  .cv-activity-topline,.cv-activity-footer { align-items:flex-start;flex-direction:column; }
+  .cv-activity-metrics { grid-template-columns:1fr; }
+  .cv-activity-metrics>div { border-right:0;border-bottom:1px solid var(--border); }
+  .cv-activity-metrics>div:last-child { border-bottom:0; }
+  .basketball-grid { margin-top:3rem; }
+  .mamba-card,.court-card { min-height:auto; }
+  .mamba-identity { margin-top:3rem;grid-template-columns:1fr; }
+  .mamba-monogram { width:92px;height:92px; }
+  .mamba-principles { margin-top:2.4rem;grid-template-columns:repeat(2,1fr); }
+  .basketball-court { min-height:360px; }
+  .court-metrics { grid-template-columns:1fr; }.court-metrics div{border-right:0;border-bottom:1px solid var(--border)}.court-metrics div:last-child{border-bottom:0}
+}
+
+@media print {
+  .basketball-section,.cv-activity { display:none!important; }
+}
+
+/* Deeper obsidian tonal pass */
+:root {
+  --bg: #090b0e;
+  --panel: rgba(11, 14, 20, 0.82);
+  --panel-solid: #0e1218;
+  --panel-soft: rgba(12, 15, 21, 0.9);
+  --border: rgba(255, 255, 255, 0.045);
+  --border-strong: rgba(255, 255, 255, 0.085);
+  --text: #eef0f4;
+  --muted: #7e8795;
+}
+html,body { background:#090b0e; }
+.glass-panel { background:var(--panel);box-shadow:0 28px 90px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.018) }
+.site-header { background:rgba(8,10,13,.88);box-shadow:0 16px 54px rgba(0,0,0,.38) }
+.hero-section { background:#090b0e }
+.hero-ambient { opacity:.72 }
+.about-section { background:linear-gradient(180deg,#090b0e,#0b0e13) }
+.simulation-section { background:linear-gradient(180deg,#0a0d11,#090b0e) }
+.map-section,.toolbox-section { background:#0a0d11 }
+.loop-section { background:linear-gradient(180deg,#090b0e,#0b0e13) }
+.connect-section { background:linear-gradient(180deg,#090b0e,#0a0d12) }
+.basketball-section { --court-gold:#846f49;background:linear-gradient(180deg,#090b0e,#0b0d11) }
+.mamba-card { background:radial-gradient(circle at 88% 18%,rgba(132,111,73,.055),transparent 28%),rgba(11,14,20,.9) }
+.court-card { background:rgba(10,13,18,.9) }
+.basketball-court { background:linear-gradient(90deg,rgba(132,111,73,.018) 1px,transparent 1px),linear-gradient(rgba(132,111,73,.018) 1px,transparent 1px),#090c10;background-size:44px 44px }
+.mamba-emblem img { filter:saturate(.5) brightness(.72) contrast(1.06) }
+.mamba-emblem span { background:#0b0d11;color:#ac9568 }
+.simulation-focus,.intel-document { background:#090c10 }
+.heatmap-shell { background:rgba(6,8,11,.66) }
+.level-0 { background:#121720 }
+
+/* Viewport-safe sizing and navigation */
+.site-header { width:min(1500px,calc(100vw - 2rem));max-width:calc(100vw - 2rem) }
+.brand-lockup { min-width:0;flex:0 0 auto }
+.site-nav { min-width:0;flex:0 1 auto;justify-content:flex-end;white-space:nowrap }
+.site-nav a { flex:0 0 auto }
+.section-wrap,.section-heading,.about-grid,.basketball-grid,.intel-body,.simulation-stage { min-width:0;max-width:100% }
+.section-heading > *,.about-grid > *,.basketball-grid > * { min-width:0 }
+img,video,canvas { max-width:100% }
+
+@media (max-width: 1240px) {
+  .site-header { gap:1rem }
+  .brand-lockup small { display:none }
+  .site-nav { gap:clamp(.7rem,1.35vw,1.1rem) }
+  .site-nav a { font-size:.49rem;letter-spacing:.035em }
+}
+
+@media (max-width: 1080px) {
+  .header-status { display:none }
+  .site-nav { position:absolute;top:calc(100% + .5rem);left:0;right:0;max-height:calc(100svh - 6rem);padding:1rem;display:none;overflow-y:auto;align-items:stretch;flex-direction:column;border:1px solid var(--border);border-radius:.6rem;background:rgba(8,10,13,.98);box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(18px) }
+  .site-nav.is-open { display:flex }
+  .site-nav a { width:100%;padding:.8rem;font-size:.58rem }
+  .nav-toggle { width:40px;height:40px;display:grid;place-content:center;gap:6px;flex:0 0 auto;border:1px solid var(--border);border-radius:.4rem;background:transparent }
+  .nav-toggle span:not(.sr-only) { width:17px;height:1px;background:#98a2b0;transition:transform 160ms ease }
+  .nav-toggle[aria-expanded="true"] span:first-child { transform:translateY(3.5px) rotate(45deg) }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { transform:translateY(-3.5px) rotate(-45deg) }
+}
+
+@media (max-width: 640px) {
+  .site-header { width:calc(100vw - 1rem);max-width:calc(100vw - 1rem) }
+  .brand-lockup strong { font-size:.62rem }
+  .section-heading h2,.connect-heading h2 { overflow-wrap:break-word }
+  .mamba-emblem { width:104px;height:104px }
+  .mamba-emblem img { width:76px;height:52px }
+}
+
+/* Near-black refinement */
+:root {
+  --bg:#050609;
+  --panel:rgba(7,9,13,.92);
+  --panel-solid:#090b0f;
+  --panel-soft:rgba(8,10,15,.94);
+  --border:rgba(255,255,255,.038);
+  --border-strong:rgba(255,255,255,.072);
+}
+html,body { background:#050609 }
+.glass-panel { background:var(--panel);box-shadow:0 30px 100px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.012) }
+.site-header { background:rgba(5,6,9,.93);border-color:rgba(255,255,255,.045) }
+.hero-section { background:#050609 }.hero-ambient{opacity:.55}
+.about-section,.loop-section,.connect-section { background:linear-gradient(180deg,#050609,#07090d) }
+.simulation-section,.basketball-section { background:linear-gradient(180deg,#06080b,#050609) }
+.map-section,.toolbox-section { background:#06080b }
+.simulation-focus,.intel-document,.basketball-court { background-color:#05070a }
+.heatmap-shell { background:rgba(3,4,6,.78) }
+.mamba-card,.court-card { background:rgba(6,8,12,.94) }
+.mamba-emblem { border:0;border-radius:0;background:transparent;box-shadow:none }
+.mamba-emblem img { filter:saturate(.46) brightness(.68) contrast(1.08) }
+.mamba-emblem span { right:2px;bottom:2px;border-color:rgba(255,255,255,.08);color:#8d929b;background:#080a0e }
