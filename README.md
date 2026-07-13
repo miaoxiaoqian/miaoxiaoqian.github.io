@@ -35,7 +35,7 @@ npm run build
 - Intel Hub：论文阅读卡、研究日志和 GitHub 公开项目接口
 - About/CV：GitHub 热力图嵌入学术履历卡片下方，避免重复分区
 - Spatial Perception Frame：Three.js 六轴机械臂、世界坐标轴、TCP 轨迹以及 J1–J6 实时参数
-- Entry Protocol：双机械夹爪拉开拼合研究面板，随后逐段描绘写实工业机器人的外轮廓，并把同一个轮廓元素直接切换为页面背景；同一会话播放一次
+- Entry Protocol：写实工业机器人先双手握住中央门缝，再以连续阻尼动作展开双臂、亲自拉开左右研究面板；随后逐段描绘外轮廓，并把同一个轮廓元素直接切换为页面背景；同一会话播放一次
 - Robot Watermark：由写实钛灰人形机器人素材提取、并在入场中动态描绘的极简黑白背景印记
 - Beyond the Lab：篮球半场训练图、24 号与科比 Sheath 标志致敬元素
 - 个人照片：当前使用 GitHub 头像，可将图片地址替换为仓库内的本地图片
