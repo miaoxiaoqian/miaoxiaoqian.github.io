@@ -770,6 +770,13 @@ document.querySelectorAll("#simulation-next, #simulation-arrow-next").forEach((b
 simulationDots.forEach((dot, index) => dot.addEventListener("click", () => updateSimulation(index)));
 updateSimulation(0);
 
+loadEncodedMedia("/media/kobe-sheath-gold.png.b64", "image/png")
+  .then((logoUrl) => {
+    const logo = document.querySelector("#kobe-sheath-logo");
+    if (logo) logo.src = logoUrl;
+  })
+  .catch((error) => console.warn("Kobe tribute mark unavailable.", error));
+
 let simulationTouchStart = 0;
 document.querySelector("#simulation-carousel")?.addEventListener("touchstart", (event) => {
   simulationTouchStart = event.changedTouches[0].clientX;
