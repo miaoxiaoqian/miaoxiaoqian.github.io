@@ -1186,3 +1186,141 @@ body.is-entry-locked { overflow:hidden }
   .entry-shutter,
   .entry-pull-handle { transition:none;animation:none }
 }
+
+/* Obsidian-and-silver material pass. */
+@media screen {
+  :root {
+    --bg:#020202;
+    --panel:#080808;
+    --panel-solid:#090909;
+    --panel-soft:#0b0b0b;
+    --border:rgba(255,255,255,.105);
+    --border-strong:rgba(255,255,255,.22);
+    --text:#f4f4f4;
+    --muted:#a0a0a0;
+    --subtle:#656565;
+  }
+  html,body { background:#020202 }
+  body {
+    background:
+      radial-gradient(ellipse at 50% -12%,rgba(255,255,255,.075),transparent 28rem),
+      linear-gradient(180deg,#030303,#010101 72%);
+  }
+  .hero-section,
+  .about-section,
+  .simulation-section,
+  .map-section,
+  .loop-section,
+  .activity-section,
+  .basketball-section,
+  .toolbox-section,
+  .connect-section {
+    background:
+      radial-gradient(ellipse at 50% 0,rgba(255,255,255,.026),transparent 34rem),
+      linear-gradient(180deg,#030303 0%,#050505 52%,#020202 100%);
+  }
+  .hero-section { background:radial-gradient(ellipse at 50% 28%,#111 0%,#050505 35%,#020202 76%) }
+  .section-wrap { border-top-color:rgba(255,255,255,.12);box-shadow:inset 0 1px rgba(255,255,255,.018) }
+  .glass-panel,.mamba-card,.court-card {
+    border-color:rgba(255,255,255,.12);
+    background:
+      linear-gradient(145deg,rgba(255,255,255,.036),transparent 34%),
+      linear-gradient(180deg,#0a0a0a,#060606);
+    box-shadow:0 32px 90px rgba(0,0,0,.46),inset 0 1px rgba(255,255,255,.07),inset 0 -1px rgba(255,255,255,.015);
+  }
+  .site-header {
+    border-color:rgba(255,255,255,.14);
+    background:linear-gradient(180deg,rgba(15,15,15,.92),rgba(4,4,4,.9));
+    box-shadow:0 18px 54px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.075);
+    backdrop-filter:blur(20px) saturate(.7);
+  }
+  .brand-mark {
+    border-color:rgba(255,255,255,.28);
+    color:#f7f7f7;
+    background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.012));
+    box-shadow:inset 0 1px rgba(255,255,255,.08);
+  }
+  .hero-title-block h1 {
+    color:#fff;
+    text-shadow:0 1px rgba(255,255,255,.16),0 22px 60px rgba(0,0,0,.72);
+  }
+  .hero-title-block h1 em { color:#aaa;text-shadow:none }
+  .section-heading h2,.connect-heading h2 { color:#eee;text-shadow:0 1px rgba(255,255,255,.08) }
+  .knowledge-stage,.pipeline-visual,.simulation-stage,.simulation-focus,.intel-document,.code-view,.basketball-court,.robot-arm-stage {
+    border-color:rgba(255,255,255,.11);
+    background:
+      radial-gradient(circle at 50% 16%,rgba(255,255,255,.028),transparent 31%),
+      linear-gradient(180deg,#080808,#040404);
+    box-shadow:inset 0 1px rgba(255,255,255,.045),0 24px 70px rgba(0,0,0,.32);
+  }
+  .research-drawer,.pipeline-stage,.intel-tree,.file-tree,.contact-form input,.contact-form textarea,.heatmap-shell,.paper-cards a,.project-feed a,.code-note {
+    border-color:rgba(255,255,255,.11);
+    background:linear-gradient(145deg,rgba(255,255,255,.024),transparent 45%),#070707;
+    box-shadow:inset 0 1px rgba(255,255,255,.035);
+  }
+  .diagnostic-button,.form-footer button {
+    border-color:#d7d7d7;
+    color:#090909;
+    background:linear-gradient(180deg,#f7f7f7 0%,#d8d8d8 52%,#bcbcbc 100%);
+    box-shadow:0 15px 38px rgba(0,0,0,.5),inset 0 1px #fff,inset 0 -1px rgba(0,0,0,.22);
+  }
+  .diagnostic-button:hover,.diagnostic-button:focus-visible,.form-footer button:hover,.form-footer button:focus-visible {
+    border-color:#fff;
+    background:linear-gradient(180deg,#fff,#e7e7e7);
+    box-shadow:0 20px 46px rgba(0,0,0,.58),0 0 0 1px rgba(255,255,255,.14),inset 0 1px #fff;
+  }
+  .level-0{background:#0d0d0d}.level-1{background:#282828}.level-2{background:#545454}.level-3{background:#a3a3a3}.level-4{background:linear-gradient(145deg,#fff,#cfcfcf);box-shadow:inset 0 1px #fff}
+}
+
+/* A slower continuous pull: grip tension → arm expansion → panel coast → contour transfer. */
+.entry-sequence { --pull-ease:cubic-bezier(.16,1,.3,1) }
+.entry-shutter {
+  transform:translate3d(0,0,0);
+  backface-visibility:hidden;
+  background:
+    radial-gradient(ellipse at 50% 35%,rgba(255,255,255,.035),transparent 34%),
+    linear-gradient(90deg,#020202,#080808 78%,#111);
+  box-shadow:inset 0 1px rgba(255,255,255,.045),0 0 84px rgba(0,0,0,.9);
+  transition:transform 2.12s var(--pull-ease) .1s;
+}
+.entry-shutter-right { background:radial-gradient(ellipse at 50% 35%,rgba(255,255,255,.035),transparent 34%),linear-gradient(270deg,#020202,#080808 78%,#111) }
+.entry-shutter::before { display:block;background:linear-gradient(180deg,rgba(255,255,255,.026),transparent 22%,transparent 82%,rgba(255,255,255,.018)) }
+.entry-sequence.is-opening .entry-shutter-left { transform:translate3d(-101%,0,0) }
+.entry-sequence.is-opening .entry-shutter-right { transform:translate3d(101%,0,0) }
+.entry-robot-imprint .robot-pose-grip {
+  transition:opacity 1.05s cubic-bezier(.4,0,.2,1) .06s,transform 1.82s var(--pull-ease);
+}
+.entry-robot-imprint .robot-pose-pull {
+  filter:grayscale(1) contrast(1.11) brightness(.96);
+  transition:opacity 1.24s var(--pull-ease) .14s,transform 2.08s var(--pull-ease),clip-path 2.08s var(--pull-ease);
+}
+.entry-sequence.is-gripping:not(.is-opening) .entry-robot-imprint { animation:robotGripLoad .44s cubic-bezier(.34,1.56,.64,1) both }
+.entry-sequence.is-gripping .entry-pull-handle { border-color:rgba(255,255,255,.52);box-shadow:0 0 0 5px rgba(255,255,255,.035),0 0 22px rgba(255,255,255,.08),0 14px 30px rgba(0,0,0,.76) }
+.entry-sequence.is-opening .entry-robot-imprint { animation:robotPullSilk 2.16s var(--pull-ease) both }
+.entry-sequence.is-opening .robot-pose-grip { filter:grayscale(1) contrast(1.1);transform:scale(.996) }
+.entry-sequence.is-opening .robot-pose-pull { filter:grayscale(1) contrast(1.11) brightness(.96) }
+.entry-pull-handle { transition:border-color .32s ease,box-shadow .32s ease,opacity .76s ease .54s }
+.robot-trace { transition:clip-path 1.36s var(--pull-ease) }
+.robot-asset.is-traced .trace-scan { animation:traceRobotContour 1.36s var(--pull-ease) both }
+.robot-watermark { transition:opacity 1.08s cubic-bezier(.4,0,.2,1) }
+.robot-watermark.is-settled { opacity:.024 }
+
+@keyframes robotGripLoad {
+  0% { transform:translate3d(-50%,0,0) scale(1) }
+  58% { transform:translate3d(-50%,1px,7px) scale(.996) }
+  100% { transform:translate3d(-50%,0,5px) scale(.998) }
+}
+
+@keyframes robotPullSilk {
+  0% { transform:translate3d(-50%,0,5px) scale(.998) }
+  20% { transform:translate3d(-50%,1px,12px) scale(.994) }
+  54% { transform:translate3d(-50%,-1px,20px) scale(1.004) }
+  78% { transform:translate3d(-50%,0,8px) scale(1.001) }
+  100% { transform:translate3d(-50%,0,0) scale(1) }
+}
+
+@media (max-width:700px) {
+  .entry-shutter { transition-duration:1.86s }
+  .entry-sequence.is-opening .entry-robot-imprint { animation-duration:1.92s }
+  .entry-robot-imprint .robot-pose-pull { transition-duration:1.05s,1.86s,1.86s }
+}
