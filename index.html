@@ -153,26 +153,35 @@
               <span class="live-label"><i></i> LIVE</span>
             </div>
 
-            <div class="coordinate-stage" aria-hidden="true">
-              <div class="coordinate-plane plane-x"></div>
-              <div class="coordinate-plane plane-y"></div>
-              <div class="coordinate-plane plane-z"></div>
-              <span class="origin-point"></span>
-              <span class="tracked-point"></span>
-              <span class="vector-line"></span>
-              <span class="axis-label label-x">X</span>
-              <span class="axis-label label-y">Y</span>
-              <span class="axis-label label-z">Z</span>
+            <div class="robot-arm-stage">
+              <canvas id="robot-arm-canvas" aria-label="带世界坐标系与实时关节参数的六轴机械臂"></canvas>
+              <div class="robot-arm-fallback" aria-hidden="true">
+                <span class="fallback-base"></span><span class="fallback-link link-one"></span><span class="fallback-joint joint-one"></span>
+                <span class="fallback-link link-two"></span><span class="fallback-joint joint-two"></span><span class="fallback-link link-three"></span>
+                <span class="fallback-gripper"></span><i class="fallback-axis axis-x">X</i><i class="fallback-axis axis-y">Y</i><i class="fallback-axis axis-z">Z</i>
+              </div>
+              <div class="robot-frame-tag tag-base"><span>FRAME_0</span><strong>WORLD / BASE</strong></div>
+              <div class="robot-frame-tag tag-tool"><span>FRAME_6</span><strong>TCP / GRIPPER</strong></div>
+              <div class="robot-arm-legend"><span><i></i> JOINT</span><span><i></i> TCP TRAJECTORY</span><span>6-DOF</span></div>
+            </div>
+
+            <div class="joint-values" aria-label="机械臂实时关节角度">
+              <div><span>J1</span><strong id="joint-1">+00.0°</strong></div>
+              <div><span>J2</span><strong id="joint-2">−32.0°</strong></div>
+              <div><span>J3</span><strong id="joint-3">+58.0°</strong></div>
+              <div><span>J4</span><strong id="joint-4">+00.0°</strong></div>
+              <div><span>J5</span><strong id="joint-5">+24.0°</strong></div>
+              <div><span>J6</span><strong id="joint-6">+00.0°</strong></div>
             </div>
 
             <div class="coordinate-values">
-              <div><span>X</span><strong id="coord-x">+0.842</strong></div>
-              <div><span>Y</span><strong id="coord-y">−0.114</strong></div>
-              <div><span>Z</span><strong id="coord-z">+1.208</strong></div>
+              <div><span>TCP / X</span><strong id="coord-x">+0.842 M</strong></div>
+              <div><span>TCP / Y</span><strong id="coord-y">−0.114 M</strong></div>
+              <div><span>TCP / Z</span><strong id="coord-z">+1.208 M</strong></div>
             </div>
 
             <footer>
-              <span>REFERENCE FRAME</span><strong>WORLD / RIGHT-HANDED</strong>
+              <span>REFERENCE FRAME</span><strong>WORLD / Z-UP / RIGHT-HANDED</strong>
             </footer>
             </article>
           </div>
