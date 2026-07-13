@@ -33,6 +33,8 @@ npm run build
 - GitHub 热力图：由 `src/main.js` 读取 `miaoxiaoqian` 的公开贡献数据，不生成模拟记录
 - SIM_DEMOS：LIBERO EP009 的 AllBase 失败轨迹与 Final Skill 成功轨迹对照轮播
 - Intel Hub：论文阅读卡、研究日志和 GitHub 公开项目接口
+- About/CV：GitHub 热力图嵌入学术履历卡片下方，避免重复分区
+- Beyond the Lab：篮球半场训练图、24 号与科比 Sheath 标志致敬元素
 - 个人照片：当前使用 GitHub 头像，可将图片地址替换为仓库内的本地图片
 
 视频发布资源位于仓库根目录的 `media/`。网页会在浏览器内还原 `.b64` 视频资产并播放，
