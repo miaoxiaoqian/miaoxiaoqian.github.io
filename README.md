@@ -1,12 +1,41 @@
-# Qian 的个人主页
+# Qian — Deep Tech & Spatial Computing
 
-这个仓库用于发布 `https://miaoxiaoqian.github.io/`。
+`https://miaoxiaoqian.github.io/` 的生产源代码。
 
-## 修改内容
+## 技术栈
 
-- 首页文字：编辑 `index.html`
-- 页面样式：编辑 `styles.css`
-- 知识图谱交互：编辑 `script.js`
-- 个人照片：当前自动使用 GitHub 头像；也可以把照片上传为 `profile.jpg`，再把 `index.html` 中的头像地址改为 `profile.jpg`
+- HTML5
+- Tailwind CSS v4
+- Vanilla JavaScript
+- Three.js
+- Vite
 
-在 GitHub 网页中修改文件并提交到 `main` 分支后，GitHub Pages 会自动更新。
+## 本地开发
+
+```bash
+npm install
+npm run dev
+```
+
+## 生产构建
+
+```bash
+npm run build
+```
+
+构建结果位于 `dist/`。GitHub Pages 根目录需要使用其中的 `index.html`、`styles.css` 和 `main.js`。
+
+## 内容维护
+
+- 页面文案与结构：`index.html`
+- 视觉系统与响应式布局：`src/styles.css`
+- Three.js 图网络、研究抽屉和表单交互：`src/main.js`
+- GitHub 热力图：由 `src/main.js` 读取 `miaoxiaoqian` 的公开贡献数据，不生成模拟记录
+- 个人照片：当前使用 GitHub 头像，可将图片地址替换为仓库内的本地图片
+
+研究图谱不会虚构论文或成果。形成公开论文、代码或项目后，在 `src/main.js` 的 `researchNodes` 数据中补充链接即可。
+
+联系表单不会在静态网站中存储数据；它会把内容带入 GitHub Issue 编辑器，由访客确认后提交。
+
+修改源码后运行 `npm run build`，再把 `dist/index.html`、`dist/styles.css` 和
+`dist/main.js` 同步到仓库根目录；GitHub Pages 会自动发布更新。
