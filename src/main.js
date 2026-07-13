@@ -5,12 +5,28 @@ const graphTooltip = document.querySelector("#graph-tooltip");
 const packetCounter = document.querySelector("#packet-count");
 const diagnosticButton = document.querySelector("#diagnostic-button");
 
-function setupEntrySequence() {
+async function hydrateRobotAssets() {
+  const response = await fetch("/media/humanoid-robot.webp.b64");
+  if (!response.ok) throw new Error(`Robot asset returned ${response.status}`);
+  const binary = atob((await response.text()).trim());
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+  const robotUrl = URL.createObjectURL(new Blob([bytes], { type: "image/webp" }));
+  document.querySelectorAll(".robot-asset").forEach((robot) => {
+    const image = robot.querySelector("img");
+    if (image) image.src = robotUrl;
+    robot.style.setProperty("--robot-image", `url("${robotUrl}")`);
+  });
+}
+
+async function setupEntrySequence() {
+  await hydrateRobotAssets();
   const sequence = document.querySelector("#entry-sequence");
   const skipButton = document.querySelector("#entry-skip");
-  const watermark = document.querySelector("#robot-watermark");
+  const introRobot = sequence?.querySelector(".entry-robot-imprint");
+  let backgroundRobot = document.querySelector("#robot-watermark");
   if (!sequence) {
-    watermark?.classList.add("is-settled");
+    backgroundRobot?.classList.add("is-traced", "is-settled");
     return;
   }
 
@@ -24,25 +40,26 @@ function setupEntrySequence() {
 
   if (prefersReducedMotion || (alreadyViewed && !forcedPreview)) {
     sequence.remove();
-    watermark?.classList.add("is-settled");
+    backgroundRobot?.classList.add("is-traced", "is-settled");
     return;
   }
 
   document.body.classList.add("is-entry-locked");
   let completed = false;
   let openingTimer;
-  let settlementTimer;
+  let tracingTimer;
+  let mappingTimer;
   let completionTimer;
 
   const completeSequence = () => {
     if (completed) return;
     completed = true;
     window.clearTimeout(openingTimer);
-    window.clearTimeout(settlementTimer);
+    window.clearTimeout(tracingTimer);
+    window.clearTimeout(mappingTimer);
     window.clearTimeout(completionTimer);
     sequence.classList.add("is-complete");
-    watermark?.classList.remove("is-imprinting");
-    watermark?.classList.add("is-settled");
+    backgroundRobot?.classList.add("is-settled");
     document.body.classList.remove("is-entry-locked");
     try {
       window.sessionStorage.setItem("qian-entry-sequence", "viewed");
@@ -51,27 +68,45 @@ function setupEntrySequence() {
     }
   };
 
-  const settleRobotIntoBackground = () => {
-    sequence.classList.add("is-settling");
-    watermark?.classList.remove("is-settled");
-    watermark?.classList.add("is-imprinting");
+  const traceRobotContour = () => {
+    sequence.classList.add("is-tracing");
+    introRobot?.classList.add("is-traced");
+  };
+
+  const mapRobotDirectlyToBackground = () => {
+    if (!introRobot || introRobot.classList.contains("robot-watermark")) return;
+    introRobot.classList.add("is-traced");
+    backgroundRobot?.remove();
+    introRobot.classList.remove("entry-robot-imprint");
+    introRobot.classList.add("robot-watermark", "is-mapped");
+    introRobot.id = "robot-watermark";
+    sequence.insertAdjacentElement("afterend", introRobot);
+    backgroundRobot = introRobot;
+    window.requestAnimationFrame(() => backgroundRobot?.classList.add("is-settled"));
   };
 
   const beginOpening = () => {
     sequence.classList.add("is-opening");
-    settlementTimer = window.setTimeout(settleRobotIntoBackground, 820);
-    completionTimer = window.setTimeout(completeSequence, 2050);
+    tracingTimer = window.setTimeout(traceRobotContour, 1000);
+    mappingTimer = window.setTimeout(mapRobotDirectlyToBackground, 2200);
+    completionTimer = window.setTimeout(completeSequence, 2550);
   };
 
   openingTimer = window.setTimeout(beginOpening, 560);
   skipButton?.addEventListener("click", () => {
     sequence.classList.add("is-opening");
-    settleRobotIntoBackground();
+    traceRobotContour();
+    mapRobotDirectlyToBackground();
     window.setTimeout(completeSequence, 320);
   });
 }
 
-setupEntrySequence();
+setupEntrySequence().catch((error) => {
+  document.body.classList.remove("is-entry-locked");
+  document.querySelector("#entry-sequence")?.remove();
+  document.querySelector("#robot-watermark")?.classList.add("is-traced", "is-settled");
+  console.warn("Robot entry asset unavailable.", error);
+});
 
 const researchNodes = [
   {
