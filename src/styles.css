@@ -1079,3 +1079,110 @@ body.is-entry-locked { overflow:hidden }
   .robot-asset,.entry-robot-imprint,.robot-watermark { left:50%;top:16vh;bottom:auto;width:min(66vw,280px);height:auto;transform:translateX(-50%);transform-origin:center center }
   .robot-watermark.is-settled { opacity:.025 }
 }
+
+/* The robot—not a separate decorative arm—physically pulls the two panels open. */
+.entry-sequence { perspective:1200px }
+.entry-robot-imprint.robot-asset,
+.robot-watermark.robot-asset {
+  left:50%;
+  top:5vh;
+  bottom:auto;
+  width:min(62vw,56vh,720px);
+  height:auto;
+  aspect-ratio:2/3;
+  transform:translateX(-50%);
+  transform-origin:50% 32%;
+}
+.entry-robot-imprint.robot-asset { z-index:203;filter:drop-shadow(0 20px 34px rgba(0,0,0,.54)) }
+.robot-asset .robot-pose {
+  object-fit:contain;
+  filter:grayscale(1) contrast(1.08);
+  will-change:opacity,transform,clip-path,filter;
+}
+.entry-robot-imprint .robot-pose-grip {
+  z-index:2;
+  opacity:.96;
+  transform:scale(1);
+  clip-path:inset(0);
+  transition:opacity .82s cubic-bezier(.4,0,.2,1),transform 1.35s cubic-bezier(.2,.75,.2,1),filter .82s ease;
+}
+.entry-robot-imprint .robot-pose-pull {
+  z-index:1;
+  opacity:0;
+  transform:scale(.985);
+  clip-path:inset(0 48% 0 48%);
+  transition:opacity 1.05s cubic-bezier(.22,1,.36,1) .12s,transform 1.58s cubic-bezier(.22,1,.36,1),clip-path 1.58s cubic-bezier(.22,1,.36,1),filter .9s ease;
+}
+.entry-sequence.is-opening .entry-robot-imprint {
+  animation:robotPullResistance 1.72s cubic-bezier(.22,1,.36,1) both;
+}
+.entry-sequence.is-opening .robot-pose-grip {
+  opacity:0;
+  transform:scale(.992);
+  filter:grayscale(1) contrast(1.1) blur(1.2px);
+}
+.entry-sequence.is-opening .robot-pose-pull {
+  opacity:.96;
+  transform:scale(1);
+  clip-path:inset(0);
+  filter:grayscale(1) contrast(1.08) blur(0);
+}
+.entry-sequence.is-opening .robot-asset.is-traced .robot-pose,
+.robot-watermark.is-traced .robot-pose {
+  opacity:0;
+  transition:opacity .72s ease;
+}
+.entry-shutter {
+  transition:transform 1.72s cubic-bezier(.22,.84,.2,1) .08s;
+  will-change:transform;
+}
+.entry-pull-handle {
+  position:absolute;
+  top:28vh;
+  z-index:2;
+  width:9px;
+  height:68px;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;
+  background:linear-gradient(90deg,#262626,#d5d5d5 48%,#444 100%);
+  box-shadow:0 0 0 5px rgba(255,255,255,.025),0 12px 28px rgba(0,0,0,.7);
+  opacity:.82;
+  transition:opacity .5s ease .38s;
+}
+.entry-pull-handle-left { right:7px }
+.entry-pull-handle-right { left:7px }
+.entry-sequence.is-opening .entry-pull-handle { opacity:0 }
+.entry-sequence.is-opening::after { transition:opacity .44s ease .18s }
+.entry-sequence.is-opening .entry-readout { opacity:0;transition-delay:.2s }
+.entry-sequence.is-opening .entry-skip { opacity:0;transition-delay:.2s }
+.robot-watermark .robot-pose-grip { opacity:0 }
+.robot-watermark .robot-pose-pull { opacity:0 }
+.robot-watermark.is-mapped { opacity:.19 }
+.robot-watermark.is-settled { opacity:.028 }
+
+@keyframes robotPullResistance {
+  0% { transform:translateX(-50%) translateZ(0) scale(1) }
+  18% { transform:translateX(-50%) translateZ(8px) scale(.992) }
+  52% { transform:translateX(-50%) translateZ(18px) scale(1.006) }
+  100% { transform:translateX(-50%) translateZ(0) scale(1) }
+}
+
+@media (max-width:700px) {
+  .entry-robot-imprint.robot-asset,
+  .robot-watermark.robot-asset {
+    left:50%;
+    top:8vh;
+    width:min(108vw,52vh,580px);
+    transform:translateX(-50%);
+    transform-origin:50% 32%;
+  }
+  .entry-pull-handle { top:29vh;height:54px }
+  .robot-watermark.is-settled { opacity:.022 }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .entry-robot-imprint .robot-pose-grip,
+  .entry-robot-imprint .robot-pose-pull,
+  .entry-shutter,
+  .entry-pull-handle { transition:none;animation:none }
+}
