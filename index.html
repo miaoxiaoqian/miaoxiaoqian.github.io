@@ -30,7 +30,7 @@
         <span class="brand-mark">Q</span>
         <span>
           <strong>QIAN</strong>
-          <small>Computer Science &amp; Embodied Intelligence</small>
+          <small>Computer Vision &amp; Embodied AI</small>
         </span>
       </a>
 
@@ -40,12 +40,13 @@
       </button>
 
       <nav id="site-nav" class="site-nav" aria-label="页面分区">
-        <a href="#research-map"><span>01</span> RESEARCH MAP</a>
-        <a href="#about"><span>02</span> ABOUT</a>
-        <a href="#featured-work"><span>03</span> FEATURED WORK</a>
-        <a href="#toolbox"><span>04</span> TOOLBOX</a>
-        <a href="#connect"><span>05</span> CONNECT</a>
+        <a href="#about"><span>01/</span> ABOUT_CV</a>
+        <a href="#sim-demos"><span>02/</span> SIM_DEMOS</a>
+        <a href="#knowledge-base"><span>03/</span> KNOWLEDGE_BASE</a>
+        <a href="#connect"><span>04/</span> CONNECT</a>
       </nav>
+
+      <p class="header-status"><span></span> STATUS: ACTIVE // OPEN FOR COLLABORATION &amp; PH.D. POSITION 2027</p>
     </header>
 
     <main id="main-content">
@@ -87,12 +88,12 @@
         <div class="telemetry telemetry-right glass-panel" aria-label="系统状态">
           <div><span>LATENCY</span><strong>4.2 <small>MS</small></strong></div>
           <div><span>CONFIDENCE</span><strong>99.18 <small>%</small></strong></div>
-          <div><span>STATE</span><strong class="state-online">STABLE</strong></div>
+          <div><span>INFERENCE_MODE</span><strong class="state-online">REAL_TIME</strong></div>
         </div>
 
         <button id="diagnostic-button" class="diagnostic-button" type="button">
           <span class="button-indicator"></span>
-          <span>EXPLORE RESEARCH</span>
+          <span>INITIALIZE_DIAGNOSTIC</span>
           <svg viewBox="0 0 18 18" aria-hidden="true">
             <path d="M4 9h9M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" />
           </svg>
@@ -104,15 +105,16 @@
 
       <section id="about" class="section-wrap about-section" aria-labelledby="about-title">
         <div class="section-heading">
-          <p><span>02</span> / COGNITIVE MATRIX</p>
-          <h2 id="about-title">A focused workspace<br />for difficult questions.</h2>
+          <p><span>01</span> / ABOUT_CV</p>
+          <h2 id="about-title">Academic trajectory<br />and research coordinates.</h2>
           <p class="section-lead">
             保持严谨、持续构建，把抽象问题转化为能够验证的模型、系统与实验。
           </p>
         </div>
 
         <div class="about-grid">
-          <article class="glass-panel about-profile">
+          <div class="about-primary">
+            <article class="glass-panel about-profile">
             <div class="profile-header">
               <img
                 src="https://github.com/miaoxiaoqian.png?size=320"
@@ -143,9 +145,9 @@
               <span>CURRENT STATE</span>
               <strong>学习中 / 构建中 / 保持好奇</strong>
             </footer>
-          </article>
+            </article>
 
-          <article class="coordinate-lab glass-panel" aria-label="实时空间坐标框">
+            <article class="coordinate-lab glass-panel" aria-label="实时空间坐标框">
             <div class="panel-topline">
               <span>SPATIAL PERCEPTION FRAME</span>
               <span class="live-label"><i></i> LIVE</span>
@@ -172,7 +174,124 @@
             <footer>
               <span>REFERENCE FRAME</span><strong>WORLD / RIGHT-HANDED</strong>
             </footer>
-          </article>
+            </article>
+          </div>
+
+          <aside class="cv-dashboard glass-panel" aria-label="交互式学术履历">
+            <div class="cv-topline">
+              <div>
+                <span>ACADEMIC CV / LIVE INDEX</span>
+                <strong>QIAN.RESEARCH_PROFILE</strong>
+              </div>
+              <button id="cv-download" type="button">[ DOWNLOAD_FULL_CV_PDF ]</button>
+            </div>
+
+            <div class="cv-timeline">
+              <article class="cv-entry is-open">
+                <button type="button" aria-expanded="true">
+                  <span>01</span><strong>Education</strong><small>COMPUTER SCIENCE / CURRENT</small><i>−</i>
+                </button>
+                <div class="cv-entry-content">
+                  <p>计算机科学专业学习轨迹，当前研究兴趣集中在计算机视觉、具身智能、机器人学习与时空数据智能。</p>
+                  <div><span>CS FOUNDATION</span><span>EMBODIED AI</span><span>SPATIAL DATA</span></div>
+                </div>
+              </article>
+
+              <article class="cv-entry">
+                <button type="button" aria-expanded="false">
+                  <span>02</span><strong>Publications</strong><small>VERIFIED INDEX / UPCOMING</small><i>+</i>
+                </button>
+                <div class="cv-entry-content" hidden>
+                  <p>公开成果索引只收录可验证的论文、代码与项目链接；形成正式成果后会在此持续更新。</p>
+                  <div><span>NO FABRICATED RECORDS</span></div>
+                </div>
+              </article>
+
+              <article class="cv-entry">
+                <button type="button" aria-expanded="false">
+                  <span>03</span><strong>Honors</strong><small>VERIFIED RECORDS ONLY</small><i>+</i>
+                </button>
+                <div class="cv-entry-content" hidden>
+                  <p>奖项与学术经历将在可公开核验后补充，保持研究档案真实、清晰且可追溯。</p>
+                  <div><span>TRANSPARENT PROFILE</span></div>
+                </div>
+              </article>
+            </div>
+
+            <footer class="cv-footer">
+              <span>PROFILE COMPLETENESS</span>
+              <div><i></i></div>
+              <strong>FOUNDATION PHASE</strong>
+            </footer>
+          </aside>
+        </div>
+      </section>
+
+      <section id="sim-demos" class="section-wrap simulation-section" aria-labelledby="simulation-title">
+        <div class="section-heading simulation-heading">
+          <p><span>02</span> / SIM_DEMOS</p>
+          <h2 id="simulation-title">Policy execution,<br />made inspectable.</h2>
+          <p class="section-lead">
+            同一 LIBERO EP009 任务的真实对照记录：AllBase 失败案例与 Final Skill 成功案例。切换视图，观察策略执行差异。
+          </p>
+        </div>
+
+        <div id="simulation-carousel" class="simulation-carousel glass-panel" aria-roledescription="carousel" aria-label="机器人策略执行对照轮播">
+          <div class="simulation-toolbar">
+            <div><span class="toolbar-dot red"></span><span class="toolbar-dot amber"></span><span class="toolbar-dot green"></span></div>
+            <p>libero_policy_compare / ep009</p>
+            <span id="simulation-counter">01 / 02</span>
+          </div>
+
+          <div class="simulation-stage">
+            <button id="simulation-prev" class="simulation-preview preview-left" type="button" aria-label="查看上一个实验">
+              <img id="preview-left-image" alt="上一个实验预览" />
+              <span id="preview-left-label">FINAL_SKILL / SUCCESS</span>
+            </button>
+
+            <article class="simulation-focus">
+              <video
+                id="simulation-video"
+                muted
+                autoplay
+                loop
+                playsinline
+                controls
+                preload="metadata"
+              ></video>
+
+              <div class="simulation-vector-grid" aria-hidden="true"></div>
+              <div class="simulation-result result-failure" id="simulation-result"><i></i> FAILURE CASE</div>
+
+              <div class="simulation-telemetry" aria-label="实验数据">
+                <div><span>DATASET</span><strong>LIBERO</strong></div>
+                <div><span>EPISODE</span><strong>009</strong></div>
+                <div><span>RESOLUTION</span><strong>256 × 256</strong></div>
+                <div><span>FRAME RATE</span><strong>10 FPS</strong></div>
+              </div>
+
+              <div class="simulation-caption">
+                <p id="simulation-kicker">ALLBASE / FAILURE ANALYSIS</p>
+                <h3 id="simulation-name">Policy rollout — failure record</h3>
+                <p id="simulation-description">完整保留失败样本，用于分析抓取、轨迹执行与终止状态之间的误差累积。</p>
+                <div class="pipeline-caption">[ PIPELINE // STEP 01: PERCEPTION → STEP 02: REASONING → STEP 03: ACTION ]</div>
+              </div>
+            </article>
+
+            <button id="simulation-next" class="simulation-preview preview-right" type="button" aria-label="查看下一个实验">
+              <img id="preview-right-image" alt="下一个实验预览" />
+              <span id="preview-right-label">FINAL_SKILL / SUCCESS</span>
+            </button>
+          </div>
+
+          <div class="simulation-controls">
+            <button id="simulation-arrow-prev" type="button" aria-label="上一个实验">←</button>
+            <div id="simulation-dots" class="simulation-dots" aria-label="实验选择">
+              <button class="is-active" type="button" aria-label="查看失败案例" aria-current="true"></button>
+              <button type="button" aria-label="查看成功案例"></button>
+            </div>
+            <button id="simulation-arrow-next" type="button" aria-label="下一个实验">→</button>
+          </div>
         </div>
       </section>
 
@@ -335,82 +454,88 @@
         </div>
       </section>
 
-      <section id="toolbox" class="section-wrap toolbox-section" aria-labelledby="toolbox-title">
+      <section id="knowledge-base" class="section-wrap toolbox-section" aria-labelledby="knowledge-title">
         <div class="section-heading toolbox-heading">
-          <p><span>04</span> / TOOLBOX</p>
-          <h2 id="toolbox-title">Research environment<br />and working stack.</h2>
+          <p><span>03</span> / KNOWLEDGE_BASE</p>
+          <h2 id="knowledge-title">An obsidian intel hub<br />for research memory.</h2>
         </div>
 
-        <div class="toolbox-grid">
-          <article class="ide-panel glass-panel">
-            <div class="ide-titlebar">
-              <div><span></span><span></span><span></span></div>
-              <p>qian-research / workspace</p>
-              <small>main</small>
-            </div>
-            <div class="ide-body">
-              <aside class="file-tree" aria-label="研究工作区文件树">
-                <p>EXPLORER</p>
-                <ul>
-                  <li class="folder open"><span>⌄</span> embodied-intelligence</li>
-                  <li class="file active"><span>◇</span> perception.py</li>
-                  <li class="file"><span>◇</span> policy_learning.py</li>
-                  <li class="folder open"><span>⌄</span> spatial_reasoning</li>
-                  <li class="file"><span>◇</span> world_model.py</li>
-                  <li class="folder"><span>›</span> sim2real</li>
-                  <li class="file"><span>⌁</span> README.md</li>
-                </ul>
-              </aside>
-              <div class="code-view" aria-label="示例研究伪代码">
-                <div class="code-tabs"><span>perception.py</span><span>×</span></div>
-                <pre><code><span class="ln">01</span><span class="kw">class</span> <span class="type">EmbodiedAgent</span>:
-<span class="ln">02</span>    <span class="kw">def</span> <span class="fn">step</span>(self, observation):
-<span class="ln">03</span>        state = self.<span class="fn">perceive</span>(observation)
-<span class="ln">04</span>        plan  = self.<span class="fn">reason</span>(state)
-<span class="ln">05</span>        action = self.<span class="fn">control</span>(plan)
-<span class="ln">06</span>        <span class="kw">return</span> action
-<span class="ln">07</span>
-<span class="ln">08</span><span class="comment"># learning through physical interaction</span></code></pre>
-              </div>
-            </div>
-          </article>
+        <div class="intel-hub glass-panel">
+          <div class="ide-titlebar">
+            <div><span></span><span></span><span></span></div>
+            <p>qian-research / intel_hub</p>
+            <small>INDEXED</small>
+          </div>
 
-          <article class="stack-panel glass-panel">
-            <div class="panel-topline"><span>TECHNICAL INDEX</span><span>07 MODULES</span></div>
-            <div class="stack-groups">
-              <div>
-                <p>LANGUAGES</p>
-                <div><span>Python</span><span>C++</span></div>
+          <div class="intel-body">
+            <aside class="intel-tree" aria-label="知识库文件树">
+              <p>RESEARCH EXPLORER</p>
+              <div class="intel-folder"><span>⌄</span> literature_radar/</div>
+              <button class="intel-file is-active" type="button" data-intel-doc="vla"><span>◇</span> vla_core_papers.md</button>
+              <button class="intel-file" type="button" data-intel-doc="spatial"><span>◇</span> spatial_reasoning.md</button>
+              <div class="intel-folder"><span>⌄</span> research_logs/</div>
+              <button class="intel-file" type="button" data-intel-doc="alignment"><span>◇</span> coordinate_alignment.md</button>
+              <button class="intel-file" type="button" data-intel-doc="knowledge"><span>◇</span> knowledge_graph.md</button>
+              <div class="intel-folder"><span>⌄</span> project_index/</div>
+              <button class="intel-file" type="button" data-intel-doc="projects"><span>◆</span> featured_projects.json</button>
+            </aside>
+
+            <article class="intel-document" aria-live="polite">
+              <div class="document-tabs">
+                <span id="intel-filename">vla_core_papers.md</span>
+                <span>READING MODE / UTF-8</span>
               </div>
-              <div>
-                <p>LEARNING</p>
-                <div><span>PyTorch</span><span>Computer Vision</span></div>
+              <div id="intel-document-content" class="document-content">
+                <p class="document-path">literature_radar / VISION_LANGUAGE_ACTION</p>
+                <h3>Vision–Language–Action: core reading set</h3>
+                <p class="document-intro">围绕语义先验、跨本体策略与可复现开源模型建立阅读坐标，持续记录可验证的论文链接与个人判断。</p>
+
+                <div class="paper-cards">
+                  <a href="https://arxiv.org/abs/2307.15818" target="_blank" rel="noreferrer">
+                    <span>FOUNDATION / VLA</span><strong>RT-2</strong><small>Vision-Language-Action Models Transfer Web Knowledge to Robotic Control ↗</small>
+                  </a>
+                  <a href="https://arxiv.org/abs/2406.09246" target="_blank" rel="noreferrer">
+                    <span>OPEN SOURCE / VLA</span><strong>OpenVLA</strong><small>An Open-Source Vision-Language-Action Model ↗</small>
+                  </a>
+                  <a href="https://arxiv.org/abs/2405.12213" target="_blank" rel="noreferrer">
+                    <span>GENERALIST POLICY</span><strong>Octo</strong><small>An Open-Source Generalist Robot Policy ↗</small>
+                  </a>
+                </div>
+
+                <div class="takeaway-block">
+                  <span>STANDARD TAKEAWAY</span>
+                  <p>把大规模视觉语言表征转化为动作并不是终点；真正值得持续验证的是跨任务泛化、闭环可靠性与对物理约束的理解。</p>
+                </div>
               </div>
-              <div>
-                <p>ROBOTICS</p>
-                <div><span>ROS</span><span>Robot Learning</span><span>Sim2Real</span></div>
-              </div>
-              <div>
-                <p>SYSTEMS</p>
-                <div><span>Linux</span><span>Git</span></div>
-              </div>
-            </div>
-            <footer>
-              <span>CURRENT MODE</span>
-              <strong><i></i> LEARNING / BUILDING</strong>
-            </footer>
-          </article>
+              <footer class="document-status"><span>WORDS / 186</span><span>LAST REVIEW / ACTIVE STUDY</span></footer>
+            </article>
+          </div>
+        </div>
+
+        <div class="knowledge-stack glass-panel">
+          <span>WORKING STACK</span>
+          <div><i>Python</i><i>PyTorch</i><i>ROS</i><i>Computer Vision</i><i>Robot Learning</i><i>Sim2Real</i><i>Linux</i><i>Git</i></div>
+          <strong><b></b> LEARNING / BUILDING / DOCUMENTING</strong>
         </div>
       </section>
 
       <section id="connect" class="section-wrap connect-section" aria-labelledby="connect-title">
         <div class="connect-heading">
-          <p><span>05</span> / CONNECT</p>
+          <p><span>04</span> / CONNECT</p>
           <h2 id="connect-title">Open to rigorous ideas<br />and thoughtful collaboration.</h2>
           <p>
             如果你也对具身智能、空间计算或机器人学习感兴趣，可以通过研究仓库发起交流。
           </p>
           <a href="https://github.com/miaoxiaoqian" target="_blank" rel="noreferrer">GITHUB / MIAOXIAOQIAN ↗</a>
+
+          <div class="open-questions">
+            <p>OPEN RESEARCH QUESTIONS</p>
+            <ol>
+              <li><span>Q1</span> 如何让策略在长时序交互中保持稳定的空间记忆？</li>
+              <li><span>Q2</span> 如何从失败轨迹中提取可迁移的纠错信号？</li>
+              <li><span>Q3</span> 多模态表征如何更可靠地对齐物理坐标与动作约束？</li>
+            </ol>
+          </div>
         </div>
 
         <form id="contact-form" class="contact-form glass-panel">
@@ -430,7 +555,7 @@
           </label>
 
           <label>
-            <span>MESSAGE</span>
+            <span>TRANSMISSION_DATA</span>
             <textarea name="message" rows="5" placeholder="Research topic, collaboration idea, or context…" required maxlength="1200"></textarea>
           </label>
 
@@ -448,7 +573,7 @@
     </main>
 
     <footer class="site-footer">
-      <p>QIAN — COMPUTER SCIENCE &amp; EMBODIED INTELLIGENCE</p>
+      <p>QIAN — COMPUTER VISION &amp; EMBODIED AI</p>
       <p><span class="status-dot"></span> SYSTEM NOMINAL</p>
       <p>© <span id="current-year">2026</span> / CHINA</p>
     </footer>
