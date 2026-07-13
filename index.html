@@ -23,6 +23,58 @@
   </head>
 
   <body class="bg-[#0d0f12] text-zinc-100 antialiased selection:bg-blue-600 selection:text-white">
+    <div id="entry-sequence" class="entry-sequence" role="dialog" aria-label="进入 Qian 数字研究工作站">
+      <button id="entry-skip" class="entry-skip" type="button">SKIP INTRO ↗</button>
+      <p class="entry-readout"><span></span> DUAL ARM ACCESS PROTOCOL / SEPARATING RESEARCH FRAME</p>
+
+      <div class="entry-shutter entry-shutter-left" aria-hidden="true">
+        <div class="entry-face-half">
+          <div class="entry-robot-face"><i></i><i></i><span></span></div>
+        </div>
+        <div class="entry-manipulator entry-manipulator-left">
+          <i class="entry-link entry-link-back"></i><i class="entry-joint entry-joint-back"></i>
+          <i class="entry-link entry-link-front"></i><i class="entry-joint entry-joint-front"></i>
+          <i class="entry-gripper"></i>
+        </div>
+        <p class="entry-panel-label">01 / PERCEPTION_FRAME</p>
+      </div>
+
+      <div class="entry-shutter entry-shutter-right" aria-hidden="true">
+        <div class="entry-face-half">
+          <div class="entry-robot-face"><i></i><i></i><span></span></div>
+        </div>
+        <div class="entry-manipulator entry-manipulator-right">
+          <i class="entry-link entry-link-back"></i><i class="entry-joint entry-joint-back"></i>
+          <i class="entry-link entry-link-front"></i><i class="entry-joint entry-joint-front"></i>
+          <i class="entry-gripper"></i>
+        </div>
+        <p class="entry-panel-label">02 / ACTION_FRAME</p>
+      </div>
+    </div>
+
+    <div class="robot-watermark" aria-hidden="true">
+      <svg viewBox="0 0 560 760" role="presentation">
+        <g fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M220 62h120l24 34v118l-38 40h-92l-38-40V96z" />
+          <path d="M238 92h84l18 24v66l-28 25h-64l-28-25v-66z" />
+          <circle cx="256" cy="144" r="8" /><circle cx="304" cy="144" r="8" />
+          <path d="M258 180h44M280 62V28M258 28h44" />
+          <path d="M230 254l-58 42-30 126 52 26 34-106 32-18m70-70 58 42 30 126-52 26-34-106-32-18" />
+          <circle cx="164" cy="312" r="22" /><circle cx="396" cy="312" r="22" />
+          <circle cx="156" cy="438" r="22" /><circle cx="404" cy="438" r="22" />
+          <path d="M242 252h76l46 96-22 178H218l-22-178z" />
+          <path d="M235 286h90l20 66-30 38h-70l-30-38zM224 526l-20 154h58l18-154m56 0 20 154h-58l-18-154" />
+          <path d="M126 446l-20 34 24 16m304-50 20 34-24 16" />
+          <circle cx="233" cy="526" r="22" /><circle cx="327" cy="526" r="22" />
+          <path d="M188 708h78m28 0h78" />
+        </g>
+        <g fill="currentColor">
+          <circle cx="280" cy="28" r="4" /><circle cx="164" cy="312" r="4" />
+          <circle cx="396" cy="312" r="4" /><circle cx="233" cy="526" r="4" /><circle cx="327" cy="526" r="4" />
+        </g>
+      </svg>
+    </div>
+
     <a class="skip-link" href="#main-content">跳到主要内容</a>
 
     <header class="site-header" aria-label="全局导航">
