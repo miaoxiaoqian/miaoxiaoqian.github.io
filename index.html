@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d0f12" />
+    <meta name="theme-color" content="#f3f4f6" />
     <meta
       name="description"
       content="Qian 的 Deep Tech & Spatial Computing 数字研究工作站，聚焦计算机科学、具身智能与机器人学习。"
@@ -22,7 +22,7 @@
     <link rel="stylesheet" crossorigin href="./styles.css">
   </head>
 
-  <body class="bg-[#0d0f12] text-zinc-100 antialiased selection:bg-blue-600 selection:text-white">
+  <body class="bg-[#f3f4f6] text-slate-900 antialiased selection:bg-[#596ca8] selection:text-white">
     <div id="entry-sequence" class="entry-sequence" role="dialog" aria-label="进入 Qian 的个人网站">
       <button id="entry-skip" class="entry-skip" type="button">SKIP INTRO ↗</button>
       <p class="entry-readout"><span></span> QIAN / PERSONAL PORTFOLIO</p>
@@ -54,11 +54,11 @@
     <a class="skip-link" href="#main-content">跳到主要内容</a>
 
     <header class="site-header" aria-label="全局导航">
-      <a class="brand-lockup" href="#spatial-core" aria-label="Qian 首页">
+      <a class="brand-lockup" href="#home" data-page-link="home" aria-label="Qian 首页">
         <span class="brand-mark">Q</span>
         <span>
           <strong>QIAN</strong>
-          <small>Computer Vision &amp; Embodied AI</small>
+          <small>Computer Science · Embodied Intelligence</small>
         </span>
       </a>
 
@@ -68,44 +68,70 @@
       </button>
 
       <nav id="site-nav" class="site-nav" aria-label="页面分区">
-        <a href="#about"><span>01/</span> ABOUT_ME</a>
-        <a href="#sim-demos"><span>02/</span> PROJECTS</a>
-        <a href="#knowledge-base"><span>03/</span> RESEARCH_NOTES</a>
-        <a href="#connect"><span>04/</span> CONNECT</a>
+        <a href="#home" data-page-link="home">HOME</a>
+        <a href="#profile" data-page-link="profile">PROFILE</a>
+        <a href="#work" data-page-link="work">WORK</a>
+        <a href="#research" data-page-link="research">RESEARCH</a>
+        <a href="#life" data-page-link="life">LIFE</a>
+        <a href="#contact" data-page-link="contact">CONTACT</a>
       </nav>
 
-      <p class="header-status"><span></span> STATUS: ACTIVE // OPEN FOR COLLABORATION &amp; PH.D. POSITION 2027</p>
+      <p class="header-status"><span></span> LEARNING · BUILDING · WRITING</p>
     </header>
 
     <main id="main-content">
       <section id="spatial-core" class="hero-section" aria-labelledby="hero-title">
         <div class="hero-ambient" aria-hidden="true"></div>
-        <canvas id="spatial-canvas" class="spatial-canvas" aria-label="具身智能时空图网络"></canvas>
-
-        <div class="mobile-graph-fallback" aria-label="具身智能多模态融合图">
-          <span class="fallback-edge edge-a"></span>
-          <span class="fallback-edge edge-b"></span>
-          <span class="fallback-edge edge-c"></span>
-          <div class="fallback-node fallback-core">EMBODIED<br />CORE</div>
-          <div class="fallback-node fallback-one">PERCEPTION</div>
-          <div class="fallback-node fallback-two">POLICY</div>
-          <div class="fallback-node fallback-three">CONTROL</div>
-        </div>
-
         <div id="graph-tooltip" class="graph-tooltip" role="status" aria-live="polite"></div>
 
-        <div class="hero-topline">
-          <p><span class="status-dot"></span> QIAN / PERSONAL PORTFOLIO</p>
-          <p>COMPUTER SCIENCE / CN-2026</p>
+        <div class="hero-shell">
+          <div class="hero-title-block">
+            <p class="eyebrow"><span></span> QIAN · PERSONAL PORTFOLIO</p>
+            <h1 id="hero-title">Qian.</h1>
+            <p class="hero-role">研究如何让机器人理解环境，<br />并在真实世界中行动。</p>
+            <p class="hero-summary">
+              计算机专业学生，关注具身智能、机器人学习与计算机视觉。这里整理我的实验、项目、阅读笔记，以及仍在形成中的问题。
+            </p>
+
+            <div class="hero-actions">
+              <button id="diagnostic-button" class="diagnostic-button" type="button">
+                <span>查看项目</span>
+                <svg viewBox="0 0 18 18" aria-hidden="true">
+                  <path d="M4 9h9M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" />
+                </svg>
+              </button>
+              <a class="hero-github-link" href="https://github.com/miaoxiaoqian" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </div>
+          </div>
+
+          <aside class="hero-visual" aria-label="具身智能空间视窗">
+            <div class="hero-visual-topline">
+              <span>SPATIAL FIELD / LIVE</span>
+              <i></i>
+            </div>
+            <canvas id="spatial-canvas" class="spatial-canvas" aria-label="具身智能时空图网络"></canvas>
+            <div class="mobile-graph-fallback" aria-label="具身智能多模态融合图">
+              <span class="fallback-edge edge-a"></span>
+              <span class="fallback-edge edge-b"></span>
+              <span class="fallback-edge edge-c"></span>
+              <div class="fallback-node fallback-core">EMBODIED<br />CORE</div>
+              <div class="fallback-node fallback-one">PERCEPTION</div>
+              <div class="fallback-node fallback-two">POLICY</div>
+              <div class="fallback-node fallback-three">CONTROL</div>
+            </div>
+            <div class="hero-visual-caption">
+              <span>CURRENT FOCUS</span>
+              <strong>Embodied Intelligence</strong>
+              <p>Perception → Reasoning → Action</p>
+            </div>
+          </aside>
         </div>
 
-        <div class="hero-title-block">
-          <p class="eyebrow">QIAN · COMPUTER SCIENCE STUDENT · PERSONAL WEBSITE</p>
-          <h1 id="hero-title">Hi, I’m Qian.<br />I build intelligence that can <em>perceive and act.</em></h1>
-          <p class="hero-summary">
-            这是我的个人网站。我在这里记录计算机科学学习、具身智能研究、项目实践，以及实验室之外真实的兴趣与成长。
-          </p>
-        </div>
+        <nav class="hero-route-index" aria-label="快速浏览">
+          <a href="#profile" data-page-link="profile"><span>01</span><strong>Profile</strong><i>关于与学习方向</i></a>
+          <a href="#work" data-page-link="work"><span>02</span><strong>Work</strong><i>项目与实验记录</i></a>
+          <a href="#research" data-page-link="research"><span>03</span><strong>Research</strong><i>研究地图与笔记</i></a>
+        </nav>
 
         <div class="telemetry telemetry-left glass-panel" aria-label="信号遥测">
           <div><span>SENDER_ID</span><strong>QIAN_CS_001</strong></div>
@@ -119,24 +145,16 @@
           <div><span>INFERENCE_MODE</span><strong class="state-online">REAL_TIME</strong></div>
         </div>
 
-        <button id="diagnostic-button" class="diagnostic-button" type="button">
-          <span class="button-indicator"></span>
-          <span>EXPLORE_MY_WORK</span>
-          <svg viewBox="0 0 18 18" aria-hidden="true">
-            <path d="M4 9h9M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" />
-          </svg>
-        </button>
-
         <div class="hero-axis axis-horizontal" aria-hidden="true">X / MULTIMODAL FUSION</div>
         <div class="hero-axis axis-vertical" aria-hidden="true">Y / PHYSICAL INTERACTION</div>
       </section>
 
       <section id="about" class="section-wrap about-section" aria-labelledby="about-title">
         <div class="section-heading">
-          <p><span>01</span> / ABOUT_CV</p>
-          <h2 id="about-title">Academic trajectory<br />and research coordinates.</h2>
+          <p><span>01</span> / PROFILE</p>
+          <h2 id="about-title">关于我</h2>
           <p class="section-lead">
-            保持严谨、持续构建，把抽象问题转化为能够验证的模型、系统与实验。
+            比起给自己贴很多标签，我更愿意用正在学习的内容和做过的实验来介绍自己。
           </p>
         </div>
 
@@ -151,27 +169,27 @@
                 alt="Qian 的个人照片"
               />
               <div>
-                <p>QIAN / COMPUTER SCIENCE STUDENT</p>
-                <h3>计算机科学 · 具身智能</h3>
+                <p>QIAN / COMPUTER SCIENCE</p>
+                <h3>计算机专业学生</h3>
               </div>
               <span class="availability"><i></i> ACTIVE</span>
             </div>
 
             <div class="profile-copy">
               <p class="profile-statement">
-                我享受把一个陌生问题拆开、理解，再用代码给出自己的答案。
+                我想做的，是让智能不只停留在屏幕里。
               </p>
               <p>
-                你好，我是 Qian，一名计算机专业学生。喜欢编程、学习新技术，目前把主要的好奇心放在具身智能与机器人学习上。
+                你好，我是 Qian。现在主要学习具身智能、机器人学习与计算机视觉，也在补足控制、系统和工程实践方面的基础。
               </p>
               <p>
-                对我来说，计算机不仅是一门专业，也是一种观察和创造世界的方式。我对能够进入物理世界的智能尤其着迷：它需要视觉、语言、控制与学习真正协同起来。
+                我最感兴趣的问题是：机器人怎样理解眼前的环境和人的意图，并把判断变成稳定、可复现的动作？我会在这里保留项目结果，也保留失败、复盘和新的问题。
               </p>
             </div>
 
             <footer class="profile-footer">
-              <span>CURRENT STATE</span>
-              <strong>学习中 / 构建中 / 保持好奇</strong>
+              <span>NOW</span>
+              <strong>学习 · 实验 · 记录</strong>
             </footer>
             </article>
 
@@ -217,8 +235,8 @@
           <aside class="cv-dashboard glass-panel" aria-label="交互式学术履历">
             <div class="cv-topline">
               <div>
-                <span>ACADEMIC CV / LIVE INDEX</span>
-                <strong>QIAN.RESEARCH_PROFILE</strong>
+                <span>PROFILE / CURRENT</span>
+                <strong>学习与研究档案</strong>
               </div>
               <button id="cv-download" type="button">[ DOWNLOAD_FULL_CV_PDF ]</button>
             </div>
@@ -226,30 +244,30 @@
             <div class="cv-timeline">
               <article class="cv-entry is-open">
                 <button type="button" aria-expanded="true">
-                  <span>01</span><strong>Education</strong><small>COMPUTER SCIENCE / CURRENT</small><i>−</i>
+                  <span>01</span><strong>学习方向</strong><small>COMPUTER SCIENCE / CURRENT</small><i>−</i>
                 </button>
                 <div class="cv-entry-content">
-                  <p>计算机科学专业学习轨迹，当前研究兴趣集中在计算机视觉、具身智能、机器人学习与时空数据智能。</p>
+                  <p>计算机专业在读。当前把学习重心放在计算机视觉、具身智能与机器人策略学习，并通过可运行的实验理解论文中的方法。</p>
                   <div><span>CS FOUNDATION</span><span>EMBODIED AI</span><span>SPATIAL DATA</span></div>
                 </div>
               </article>
 
               <article class="cv-entry">
                 <button type="button" aria-expanded="false">
-                  <span>02</span><strong>Publications</strong><small>VERIFIED INDEX / UPCOMING</small><i>+</i>
+                  <span>02</span><strong>公开成果</strong><small>PROJECTS / PAPERS / CODE</small><i>+</i>
                 </button>
                 <div class="cv-entry-content" hidden>
-                  <p>公开成果索引只收录可验证的论文、代码与项目链接；形成正式成果后会在此持续更新。</p>
+                  <p>这里只收录能够公开查看的论文、代码和项目。新的成果完成后，会补充链接、说明和复现记录。</p>
                   <div><span>NO FABRICATED RECORDS</span></div>
                 </div>
               </article>
 
               <article class="cv-entry">
                 <button type="button" aria-expanded="false">
-                  <span>03</span><strong>Honors</strong><small>VERIFIED RECORDS ONLY</small><i>+</i>
+                  <span>03</span><strong>个人记录</strong><small>EXPERIENCE / HONORS</small><i>+</i>
                 </button>
                 <div class="cv-entry-content" hidden>
-                  <p>奖项与学术经历将在可公开核验后补充，保持研究档案真实、清晰且可追溯。</p>
+                  <p>课程、比赛、奖项和研究经历会在确认可公开后逐步补充；没有内容时就保持空白。</p>
                   <div><span>TRANSPARENT PROFILE</span></div>
                 </div>
               </article>
@@ -264,8 +282,8 @@
             <section class="cv-activity" aria-labelledby="activity-title" data-github-user="miaoxiaoqian">
               <div class="cv-activity-topline">
                 <div>
-                  <span>GITHUB / PUBLIC ACTIVITY</span>
-                  <h3 id="activity-title">Contribution signal</h3>
+                <span>GITHUB / PUBLIC ACTIVITY</span>
+                  <h3 id="activity-title">最近一年的代码记录</h3>
                 </div>
                 <span id="activity-status" class="activity-status"><i></i> SYNCING</span>
               </div>
@@ -299,10 +317,10 @@
 
       <section id="sim-demos" class="section-wrap simulation-section" aria-labelledby="simulation-title">
         <div class="section-heading simulation-heading">
-          <p><span>02</span> / SIM_DEMOS</p>
-          <h2 id="simulation-title">Policy execution,<br />made inspectable.</h2>
+          <p><span>02</span> / PROJECTS</p>
+          <h2 id="simulation-title">实验与项目</h2>
           <p class="section-lead">
-            同一 LIBERO EP009 任务的真实对照记录：AllBase 失败案例与 Final Skill 成功案例。切换视图，观察策略执行差异。
+            这里先放两段 LIBERO EP009 的策略执行记录。成功和失败都会保留，因为一次失败往往能更清楚地暴露策略的问题。
           </p>
         </div>
 
@@ -367,10 +385,10 @@
 
       <section id="research-map" class="section-wrap map-section" aria-labelledby="map-title">
         <div class="section-heading map-heading">
-          <p><span>01</span> / RESEARCH KNOWLEDGE MAP</p>
-          <h2 id="map-title">A spatial index of<br />research questions.</h2>
+          <p><span>03</span> / RESEARCH</p>
+          <h2 id="map-title">研究地图</h2>
           <p class="section-lead">
-            点击节点聚焦研究分支。图谱只呈现真实学习方向；论文与项目链接会在公开成果形成后持续补充。
+            这不是成果清单，而是我理解具身智能的方式。点击节点，可以查看每个方向之间的关系和我目前的关注点。
           </p>
         </div>
 
@@ -426,10 +444,10 @@
 
       <section id="featured-work" class="section-wrap loop-section" aria-labelledby="loop-title">
         <div class="section-heading loop-heading">
-          <p><span>03</span> / FEATURED DIRECTION</p>
-          <h2 id="loop-title">The embodied<br />intelligence loop.</h2>
+          <p><span>04</span> / CURRENT FOCUS</p>
+          <h2 id="loop-title">我关注的闭环</h2>
           <p class="section-lead">
-            将感知、推理与执行组织为可观测、可验证、可持续优化的闭环系统。
+            机器人真正开始工作时，感知、推理与动作不是三个孤立模块，而是一条不断接收反馈、修正误差的链路。
           </p>
         </div>
 
@@ -483,28 +501,28 @@
 
       <section id="beyond-lab" class="section-wrap basketball-section" aria-labelledby="basketball-title">
         <div class="section-heading basketball-heading">
-          <p>PERSONAL / BEYOND_THE_LAB</p>
-          <h2 id="basketball-title">Built through repetition.<br />Focused under pressure.</h2>
+          <p><span>05</span> / PERSONAL</p>
+          <h2 id="basketball-title">研究之外</h2>
           <p class="section-lead">
-            我喜欢科比，也喜欢打篮球。球场上的重复训练、复盘与专注，和研究中持续调试、验证与迭代有着相同的节奏。
+            我喜欢打篮球，也喜欢科比。篮球让我保持节奏，也提醒我：很多能力并不是突然得到的，而是在重复、复盘和修正中慢慢形成。
           </p>
         </div>
 
         <div class="basketball-grid">
           <article class="mamba-card glass-panel">
-            <div class="mamba-topline"><span>MAMBA MENTALITY / PERSONAL CODE</span><span>ACTIVE</span></div>
+            <div class="mamba-topline"><span>BASKETBALL / 24</span><span>PERSONAL INFLUENCE</span></div>
             <div class="mamba-identity" aria-label="科比与24号致敬元素">
               <div class="mamba-emblem">
                 <img id="kobe-sheath-logo" alt="科比 Bryant Sheath 标志" />
                 <span>24</span>
               </div>
               <div>
-                <p>DISCIPLINE / CRAFT / RESILIENCE</p>
-                <h3>把热爱变成长期训练。</h3>
+                <p>FOCUS / REPETITION / REVIEW</p>
+                <h3>认真对待每一次重复。</h3>
               </div>
             </div>
             <p class="mamba-copy">
-              科比带给我的不只是篮球记忆，更是一种面对困难问题的方式：保持专注，尊重重复，在失败后继续修正动作。无论是投篮还是实验，都需要把每一次反馈变成下一次更稳定的执行。
+              我喜欢科比对训练和基本功的重视。球场和实验室当然不同，但它们都需要耐心：观察哪里出了问题，调整动作，然后再做一次。
             </p>
             <div class="mamba-principles">
               <span><i>01</i> FOCUS</span><span><i>02</i> REPETITION</span><span><i>03</i> REVIEW</span><span><i>04</i> RESILIENCE</span>
@@ -538,8 +556,9 @@
 
       <section id="knowledge-base" class="section-wrap toolbox-section" aria-labelledby="knowledge-title">
         <div class="section-heading toolbox-heading">
-          <p><span>03</span> / KNOWLEDGE_BASE</p>
-          <h2 id="knowledge-title">An obsidian intel hub<br />for research memory.</h2>
+          <p><span>06</span> / NOTES</p>
+          <h2 id="knowledge-title">阅读与工具</h2>
+          <p class="section-lead">把论文、实验记录和常用工具放在一起，方便回看，也方便知道自己下一步该补什么。</p>
         </div>
 
         <div class="intel-hub glass-panel">
@@ -603,10 +622,10 @@
 
       <section id="connect" class="section-wrap connect-section" aria-labelledby="connect-title">
         <div class="connect-heading">
-          <p><span>04</span> / CONNECT</p>
-          <h2 id="connect-title">Open to rigorous ideas<br />and thoughtful collaboration.</h2>
+          <p><span>07</span> / CONNECT</p>
+          <h2 id="connect-title">保持联系</h2>
           <p>
-            如果你也对具身智能、空间计算或机器人学习感兴趣，可以通过研究仓库发起交流。
+            如果你也在学习具身智能、机器人学习或计算机视觉，欢迎来 GitHub 看看我的项目，或者留下具体的问题和想法。
           </p>
           <a href="https://github.com/miaoxiaoqian" target="_blank" rel="noreferrer">GITHUB / MIAOXIAOQIAN ↗</a>
 
@@ -622,29 +641,29 @@
 
         <form id="contact-form" class="contact-form glass-panel">
           <div class="panel-topline">
-            <span>SECURE SIGNAL COMPOSER</span>
+            <span>MESSAGE</span>
             <span class="live-label"><i></i> READY</span>
           </div>
 
           <label>
-            <span>SENDER_IDENTITY</span>
-            <input name="identity" type="text" autocomplete="name" placeholder="Your name / institution" required maxlength="80" />
+            <span>你的名字</span>
+            <input name="identity" type="text" autocomplete="name" placeholder="你的姓名或机构" required maxlength="80" />
           </label>
 
           <label>
-            <span>SIGNAL_CHANNELS</span>
-            <input name="channel" type="text" autocomplete="email" placeholder="Email or public profile" required maxlength="120" />
+            <span>联系方式</span>
+            <input name="channel" type="text" autocomplete="email" placeholder="邮箱或公开主页" required maxlength="120" />
           </label>
 
           <label>
-            <span>TRANSMISSION_DATA</span>
-            <textarea name="message" rows="5" placeholder="Research topic, collaboration idea, or context…" required maxlength="1200"></textarea>
+            <span>想说的话</span>
+            <textarea name="message" rows="5" placeholder="想交流的研究问题、项目或想法…" required maxlength="1200"></textarea>
           </label>
 
           <div class="form-footer">
-            <p>消息将在 GitHub Issue 编辑器中完成提交；本站不存储表单数据。</p>
+            <p>点击后会前往 GitHub Issue 页面确认内容；本站不会保存表单数据。</p>
             <button type="submit">
-              <span>SEND MESSAGE</span>
+              <span>发送消息</span>
               <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h10M10 5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" /></svg>
             </button>
           </div>
@@ -655,8 +674,8 @@
     </main>
 
     <footer class="site-footer">
-      <p>QIAN — COMPUTER VISION &amp; EMBODIED AI</p>
-      <p><span class="status-dot"></span> SYSTEM NOMINAL</p>
+      <p>QIAN — COMPUTER SCIENCE &amp; EMBODIED INTELLIGENCE</p>
+      <p><span class="status-dot"></span> LEARNING IN PUBLIC</p>
       <p>© <span id="current-year">2026</span> / CHINA</p>
     </footer>
 
